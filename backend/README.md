@@ -39,12 +39,32 @@ uv pip install -r requirements.txt
 uvicorn app.main:app --reload
 ```
 
-## 4. Railway 배포
+## 4. Railway 배포 (FastAPI + Nginx)
 
-1. Railway에서 **New Project → Deploy from GitHub Repo**로 이 저장소를 연결합니다.
-2. `backend` 디렉터리를 서비스 루트로 사용하도록 `Procfile` 없이도, Railway의 "Start Command"에 `uvicorn app.main:app --host 0.0.0.0 --port $PORT`를 입력하세요.
-3. `pip install -r backend/requirements.txt`를 실행하도록 Nixpacks 자동 감지를 사용하거나, `railway run` 시 `PYTHONPATH=backend` 환경을 추가하세요. (Railway는 하위 디렉터리에 있는 경우 `NIXPACKS_BUILD_CMD=pip install -r backend/requirements.txt`와 `NIXPACKS_START_CMD=uvicorn app.main:app --host 0.0.0.0 --port $PORT` 설정을 추천합니다.)
-4. 위 표의 환경 변수를 Railway Variables로 추가합니다.
+Railway 프로젝트 하나에 아래 두 서비스를 각각 Docker로 배포하면 됩니다.
+
+### 4-1. FastAPI 서비스
+
+- **Source**: 이 저장소 → 서비스 설정에서 `Dockerfile` 경로를 `backend/Dockerfile`로 지정합니다.
+- **Port**: 기본값 8000 (Dockerfile에서 `EXPOSE 8000`).
+- **Start command**: Dockerfile의 `CMD` (`uvicorn app.main:app --host 0.0.0.0 --port 8000`)가 자동 사용됩니다.
+- **Variables**: 위 표의 환경 변수들을 FastAPI 서비스에 등록하세요.
+
+서비스 이름을 `fastapi`로 지정하면 같은 프로젝트의 다른 컨테이너에서 `http://fastapi.railway.internal:8000`으로 접근할 수 있습니다.
+
+### 4-2. Nginx 리버스 프록시 서비스
+
+- **Source**: 저장소 루트의 `Dockerfile` (기본값).
+- **Variables**
+  - 선택: `FASTAPI_UPSTREAM=http://fastapi.railway.internal:8000` (이 값을 지정하지 않으면 Railway 환경에서는 자동으로 위 주소를 사용합니다.)
+  - 선택: `PORT` (Railway가 기본으로 주입하지만, 수동으로 바꾸고 싶을 때만 설정합니다.)
+
+이 서비스가 정적 파일(`index.html`, `welcome.html`)을 제공하면서 `/api/` 경로는 FastAPI 서비스로 프록시합니다.
+
+### 4-3. 서비스 연결 확인
+
+- 같은 프로젝트 내 서비스 간에는 `<service-name>.railway.internal:<port>` 주소로 통신할 수 있습니다.
+- 배포 후 Nginx 로그에서 `GET /api/health` 요청이 FastAPI로 전달되는지 확인하세요.
 
 ## 5. Railway Cron (매일 자정)
 

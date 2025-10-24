@@ -1,5 +1,8 @@
 FROM nginx:alpine
 
+# Expose port 80 (default nginx port)
+EXPOSE 80
+
 # Copy static assets
 COPY index.html /usr/share/nginx/html/index.html
 COPY welcome.html /usr/share/nginx/html/welcome.html
