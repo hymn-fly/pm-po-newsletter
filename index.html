@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PM Letter | 내 메일함 속, 작은 PM/PO 멘토</title>
+    
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet"/>
+
+    <style>
+        /* --- GLOBAL DESIGN & STYLE GUIDE --- */
+        :root {
+            --background-primary: #FFFFFF;
+            --background-secondary: #F9FAFB;
+            --text-primary: #1F2937;
+            --text-secondary: #6B7280;
+            --accent-blue: #3B82F6;
+            --border-color: #E5E7EB;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+            background-color: var(--background-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        section {
+            padding: 100px 0;
+        }
+
+        h1, h2, h3 {
+            font-weight: 700;
+            line-height: 1.3;
+            letter-spacing: -0.02em;
+        }
+        h1 { font-size: 3.5rem; }
+        h2 { font-size: 2.5rem; text-align: center; }
+        h3 { font-size: 1.5rem; }
+
+        p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* --- VISUAL DETAILS & POLISH --- */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-blue);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #2563EB;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -10px var(--accent-blue);
+        }
+
+        /* --- HEADER --- */
+        .header {
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        /* --- SECTION 1: HERO --- */
+        .hero {
+            text-align: center;
+            padding-top: 80px;
+            padding-bottom: 120px;
+            background: linear-gradient(180deg, rgba(59, 130, 246, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
+        }
+        .hero h1 {
+            background: linear-gradient(90deg, var(--accent-blue) 0%, #1d4ed8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 24px;
+        }
+        .hero .sub-headline {
+            max-width: 650px;
+            margin: 0 auto 32px;
+        }
+        .hero-form {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .email-input {
+            width: 320px;
+            padding: 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            font-size: 1rem;
+            font-family: 'Pretendard', sans-serif;
+        }
+        .email-input:focus {
+            outline: 2px solid var(--accent-blue);
+            border-color: var(--accent-blue);
+        }
+
+        /* --- SECTION 2: CORE VALUE PROPOSITION --- */
+        .value-prop .section-headline { margin-bottom: 60px; }
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        .card {
+            background: var(--background-primary);
+            padding: 32px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+        .card-icon { margin-bottom: 20px; }
+        .card-icon i {
+            font-size: 48px;
+            color: var(--text-primary);
+            line-height: 1;
+        }
+        .card h3 { margin-bottom: 12px; }
+        .card p { font-size: 1rem; }
+
+        /* --- SECTION 3: CONTENT PREVIEW --- */
+        .content-preview .section-headline { margin-bottom: 80px; }
+        .timeline {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .timeline-item {
+            padding: 10px 40px 30px 80px;
+            position: relative;
+        }
+        .timeline-item::before {
+            content: attr(data-day);
+            position: absolute;
+            left: -10px;
+            top: 5px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--background-primary);
+            border: 3px solid var(--accent-blue);
+            color: var(--accent-blue);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+        }
+        .timeline-item h3 { font-size: 1.25rem; }
+        .timeline-item p { font-size: 1rem; }
+
+        /* --- SECTION 4: THE PM PILOT PROMISE --- */
+        .promise {
+            background-color: var(--background-secondary);
+        }
+        .promise-content {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .promise-icon {
+            color: var(--accent-blue);
+            margin-bottom: 24px;
+        }
+        .promise-icon i { 
+            font-size: 48px;
+            line-height: 1;
+        }
+        .promise-quote {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        .promise-body {
+            font-size: 1.125rem;
+        }
+
+        /* --- SECTION 5: FINAL CTA --- */
+        .final-cta {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(59, 130, 246, 0.05) 100%);
+            text-align: center;
+        }
+        .final-cta h2 { margin-bottom: 16px; }
+        .final-cta .sub-headline {
+            max-width: 600px;
+            margin: 0 auto 32px;
+        }
+
+        /* --- SECTION 6: FOOTER --- */
+        .footer {
+            background-color: var(--text-primary);
+            color: var(--text-secondary);
+            padding: 60px 0;
+            text-align: center;
+        }
+        .footer-links {
+            margin-bottom: 20px;
+        }
+        .footer-links a {
+            color: #A1A1AA;
+            text-decoration: none;
+            margin: 0 15px;
+            transition: color 0.3s ease;
+        }
+        .footer-links a:hover {
+            color: white;
+        }
+
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            section { padding: 80px 0; }
+            
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+            .timeline-item { padding: 10px 20px 30px 90px; }
+            .timeline-item::before { left: 0; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="#" class="logo">PM Letter</a>
+                <a href="#final-cta" class="btn">구독 시작하기</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="hero" class="hero">
+            <div class="container">
+                <h1 class="fade-in">내 메일함 속, 작은 PM/PO 멘토</h1>
+                <p class="sub-headline fade-in" style="transition-delay: 0.1s;">복잡한 PM/PO 핵심 지식, 이제 AI가 주니어의 눈높이에 맞춰 요약해 드려요. 검증된 전문가의 인사이트로 당신의 성장을 돕는 든든한 멘토가 되어줄게요.</p>
+                <form class="hero-form fade-in" style="transition-delay: 0.2s;">
+                    <input type="email" class="email-input" placeholder="이메일 주소를 입력해주세요" required>
+                    <button type="submit" class="btn">무료로 5일 집중 코스 시작하기</button>
+                </form>
+            </div>
+        </section>
+
+        <section class="value-prop container">
+            <h2 class="section-headline fade-in">PM Letter의 핵심 가치</h2>
+            <div class="cards-grid">
+                <div class="card fade-in">
+                    <div class="card-icon">
+                        <i class="ri-lightbulb-flash-line"></i>
+                    </div>
+                    <h3>검증된 전문가의 지혜</h3>
+                    <p>Y Combinator 창업자, 유명 CPO 등 업계 리더들의 아티클과 성공 사례에서 실무의 본질을 꿰뚫는 핵심만 골라 담았어요. 더 이상 정보의 홍수 속에서 헤매지 마세요.</p>
+                </div>
+                <div class="card fade-in" style="transition-delay: 0.1s;">
+                    <div class="card-icon">
+                        <i class="ri-robot-2-line"></i> 
+                    </div>
+                    <h3>AI 기반의 스마트한 요약</h3>
+                    <p>저희 AI가 복잡하고 긴 분량의 원문을 주니어의 시각에서 가장 중요한 내용만 남기고 압축해 드려요. 당신은 아낀 시간만큼 성장에만 집중하면 돼요.</p>
+                </div>
+                <div class="card fade-in" style="transition-delay: 0.2s;">
+                    <div class="card-icon">
+                        <i class="ri-compass-3-line"></i>
+                    </div>
+                    <h3>성공하는 PM의 사고방식</h3>
+                    <p>뛰어난 PM은 스킬이 아닌 사고방식에서 차이가 납니다. 사용자의 진짜 문제를 파고드는 집요함, 데이터 너머의 맥락을 읽는 통찰력. 저희는 당신이 단단한 PM의 마인드셋을 갖추도록 돕습니다.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-preview container">
+            <h2 class="section-headline fade-in">5일 집중 코스 커리큘럼</h2>
+            <div class="timeline">
+                <div class="timeline-item fade-in" data-day="Day 1">
+                    <h3>PM, PO, 서비스기획자는 어떻게 하루를 보낼까?</h3>
+                    <p>헷갈리기 쉬운 직무별 역할을 명확히 구분하고, 실제 하루 업무를 통해 각 직무의 핵심을 파악합니다.</p>
+                </div>
+                <div class="timeline-item fade-in" data-day="Day 2">
+                    <h3>좋은 PM/PO에게 필요한 4가지 공통 역량</h3>
+                    <p>데이터 기반 사고, 커뮤니케이션, 문제 정의, Ownership. 모든 기업이 공통적으로 강조하는 핵심 역량을 배웁니다.</p>
+                </div>
+                <div class="timeline-item fade-in" data-day="Day 3">
+                    <h3>성공 사례: Uber는 어떻게 데이터로 '기다림'을 해결했나?</h3>
+                    <p>데이터, 협업, 문제 정의, Ownership이 어떻게 탁월한 사용자 경험 개선으로 이어지는지 Uber 사례로 학습합니다.</p>
+                </div>
+                 <div class="timeline-item fade-in" data-day="Day 4">
+                    <h3>실패 사례: 이마트몰은 왜 사용자에게 외면받았나?</h3>
+                    <p>'공급자 중심 사고'가 PM/PO의 역량을 어떻게 무너뜨리는지 이마트몰의 실패를 통해 분석합니다.</p>
+                </div>
+                 <div class="timeline-item fade-in" data-day="Day 5">
+                    <h3>면접 질문에 숨은 본질: PM/PO의 마인드셋</h3>
+                    <p>면접관이 진짜 확인하고 싶은 '사용자 중심 사고'를 면접 질문을 통해 증명하는 법을 알아봅니다.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="promise">
+            <div class="container promise-content fade-in">
+                <div class="promise-icon">
+                    <i class="ri-bookmark-line"></i>
+                </div>
+                <h2 class="section-headline">PM Letter의 약속</h2>
+                <p class="promise-quote">"저희는 '스킬'이 아닌 '관점'을 이야기합니다."</p>
+                <p class="promise-body">시중에 PM 스킬을 알려주는 강의와 글은 많습니다. 하지만 성공적인 프로덕트는 화려한 스킬이 아닌, 사용자를 향한 깊은 공감과 집요한 문제 해결 과정에서 탄생합니다. PM Letter는 현업 전문가들의 지혜를 모아, 당신이 성공하는 PM의 '마인드셋'을 갖추도록 돕겠습니다. 도구에 흔들리지 않는 당신만의 프로덕트 철학을 만들어가세요.</p>
+            </div>
+        </section>
+
+        <section id="final-cta" class="final-cta">
+            <div class="container fade-in">
+                <h2 class="section-headline">성장의 기회를 놓치지 마세요</h2>
+                <p class="sub-headline">단 5일의 투자로, 가장 먼저 성장의 기회를 잡으세요.</p>
+                <form class="hero-form">
+                    <input type="email" class="email-input" placeholder="이메일 주소를 입력해주세요" required>
+                    <button type="submit" class="btn">지금 구독 시작하기</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-links">
+                <a href="#">About Us</a>
+                <a href="#">Contact</a>
+                <a href="#">Privacy Policy</a>
+            </div>
+            <p>© 2025 PM Letter. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- JAVASCRIPT FOR FADE-IN ANIMATION ---
+        const faders = document.querySelectorAll('.fade-in');
+
+        const appearOptions = {
+            threshold: 0.2,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) {
+                    return;
+                } else {
+                    entry.target.classList.add('visible');
+                    appearOnScroll.unobserve(entry.target);
+                }
+            });
+        }, appearOptions);
+
+        faders.forEach(fader => {
+            appearOnScroll.observe(fader);
+        });
+    </script>
+</body>
+</html>
