@@ -95,6 +95,23 @@
             box-shadow: 0 10px 20px -10px var(--accent-blue);
         }
 
+        .form-message {
+            width: 100%;
+            text-align: center;
+            margin-top: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .form-message.success {
+            color: #047857;
+        }
+
+        .form-message.error {
+            color: #dc2626;
+        }
+
         /* --- HEADER --- */
         .header {
             padding: 20px 0;
@@ -296,10 +313,11 @@
             <div class="container">
                 <h1 class="fade-in">내 메일함 속, 작은 PM/PO 멘토</h1>
                 <p class="sub-headline fade-in" style="transition-delay: 0.1s;">복잡한 PM/PO 핵심 지식, 이제 AI가 주니어의 눈높이에 맞춰 요약해 드려요. 검증된 전문가의 인사이트로 당신의 성장을 돕는 든든한 멘토가 되어줄게요.</p>
-                <form class="hero-form fade-in" style="transition-delay: 0.2s;">
-                    <input type="email" class="email-input" placeholder="이메일 주소를 입력해주세요" required>
+                <form class="hero-form subscription-form fade-in" style="transition-delay: 0.2s;">
+                    <input type="email" class="email-input" name="email" placeholder="이메일 주소를 입력해주세요" required>
                     <button type="submit" class="btn">무료로 5일 집중 코스 시작하기</button>
                 </form>
+                <p class="form-message" role="status" aria-live="polite"></p>
             </div>
         </section>
 
@@ -371,10 +389,11 @@
             <div class="container fade-in">
                 <h2 class="section-headline">성장의 기회를 놓치지 마세요</h2>
                 <p class="sub-headline">단 5일의 투자로, 가장 먼저 성장의 기회를 잡으세요.</p>
-                <form class="hero-form">
-                    <input type="email" class="email-input" placeholder="이메일 주소를 입력해주세요" required>
+                <form class="hero-form subscription-form">
+                    <input type="email" class="email-input" name="email" placeholder="이메일 주소를 입력해주세요" required>
                     <button type="submit" class="btn">지금 구독 시작하기</button>
                 </form>
+                <p class="form-message" role="status" aria-live="polite"></p>
             </div>
         </section>
     </main>
@@ -412,6 +431,67 @@
 
         faders.forEach(fader => {
             appearOnScroll.observe(fader);
+        });
+
+        const API_BASE_URL = window.PM_LETTER_API_BASE_URL || 'https://your-railway-service.up.railway.app';
+        const SUBSCRIPTION_ENDPOINT = `${API_BASE_URL.replace(/\/$/, '')}/subscriptions`;
+
+        function setMessage(element, text, variant) {
+            element.textContent = text;
+            element.classList.remove('success', 'error');
+            if (variant) {
+                element.classList.add(variant);
+            }
+        }
+
+        async function submitSubscription(form, messageEl) {
+            const formData = new FormData(form);
+            const email = formData.get('email');
+
+            if (!email) {
+                setMessage(messageEl, '이메일을 입력해주세요.', 'error');
+                return;
+            }
+
+            const submitButton = form.querySelector('button[type="submit"]');
+            const originalText = submitButton.textContent;
+            submitButton.disabled = true;
+            submitButton.textContent = '등록 중...';
+            setMessage(messageEl, '잠시만 기다려주세요...', null);
+
+            try {
+                const response = await fetch(SUBSCRIPTION_ENDPOINT, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email })
+                });
+
+                const result = await response.json();
+
+                if (!response.ok) {
+                    const message = result?.detail || result?.message || '이미 등록된 이메일이거나 오류가 발생했습니다.';
+                    throw new Error(message);
+                }
+
+                setMessage(messageEl, '등록이 완료되었어요! 이메일을 확인해주세요.', 'success');
+                form.reset();
+            } catch (error) {
+                setMessage(messageEl, error.message || '오류가 발생했어요. 잠시 후 다시 시도해주세요.', 'error');
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = originalText;
+            }
+        }
+
+        document.querySelectorAll('.subscription-form').forEach(form => {
+            const messageEl = form.nextElementSibling;
+
+            form.addEventListener('submit', event => {
+                event.preventDefault();
+                submitSubscription(form, messageEl);
+            });
         });
     </script>
 </body>
