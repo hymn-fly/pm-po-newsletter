@@ -1,5 +1,6 @@
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from contextlib import asynccontextmanager
 
 from .config import get_settings
 from .schemas import SubscriptionResponse, SubscriptionCreate
@@ -7,11 +8,9 @@ from .services import SubscriptionService
 from .supabase_client import get_supabase_client
 
 
-app = FastAPI(title="PM Letter Subscription API")
-
-
-@app.on_event("startup")
-def configure_cors() -> None:
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup
     settings = get_settings()
     if settings.allowed_origins:
         app.add_middleware(
@@ -21,6 +20,11 @@ def configure_cors() -> None:
             allow_methods=["*"],
             allow_headers=["*"],
         )
+    yield
+    # Shutdown (필요한 경우 여기에 정리 코드 추가)
+
+
+app = FastAPI(title="PM Letter Subscription API")
 
 
 def get_subscription_service() -> SubscriptionService:
