@@ -433,8 +433,8 @@
             appearOnScroll.observe(fader);
         });
 
-        const API_BASE_URL = window.PM_LETTER_API_BASE_URL || 'https://your-railway-service.up.railway.app';
-        const SUBSCRIPTION_ENDPOINT = `${API_BASE_URL.replace(/\/$/, '')}/subscriptions`;
+        const API_BASE_URL = (window.PM_LETTER_API_BASE_URL || `${window.location.origin}/api`).replace(/\/$/, '');
+        const SUBSCRIPTION_ENDPOINT = `${API_BASE_URL}/subscriptions`;
 
         function setMessage(element, text, variant) {
             element.textContent = text;
