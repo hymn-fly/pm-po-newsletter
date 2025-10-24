@@ -1,7 +1,8 @@
 from functools import lru_cache
 from typing import List
 
-from pydantic import BaseSettings, Field, HttpUrl
+from pydantic import Field, HttpUrl
+from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):

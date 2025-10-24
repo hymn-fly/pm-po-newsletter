@@ -1,7 +1,7 @@
 from datetime import datetime, timezone
 
 from fastapi import HTTPException, status
-from supabase.lib.client import Client
+from supabase import Client
 
 from .schemas import Subscription, SubscriptionCreate
 
@@ -21,7 +21,7 @@ class SubscriptionService:
             .execute()
         )
 
-        if existing.data:
+        if existing and existing.data:
             raise HTTPException(
                 status_code=status.HTTP_409_CONFLICT,
                 detail="이미 해당 이메일로 구독 중입니다.",

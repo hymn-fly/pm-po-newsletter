@@ -33,9 +33,9 @@ create table if not exists public.subscriptions (
 
 ```bash
 cd backend
-python -m venv .venv
+uv venv
 source .venv/bin/activate
-pip install -r requirements.txt
+uv pip install -r requirements.txt
 uvicorn app.main:app --reload
 ```
 
