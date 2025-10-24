@@ -6,7 +6,7 @@ export PORT="$PORT_VALUE"
 
 # Detect Railway env to set sensible FastAPI default upstream
 if [ -n "${RAILWAY_ENVIRONMENT_ID:-}" ]; then
-    DEFAULT_FASTAPI_UPSTREAM="http://fastapi.railway.internal:8000"
+    DEFAULT_FASTAPI_UPSTREAM="http://pm-po-newsletter.railway.internal:8000"
 else
     DEFAULT_FASTAPI_UPSTREAM="http://host.docker.internal:8000"
 fi
