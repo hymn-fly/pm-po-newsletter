@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 
 from .config import get_settings
-from .schemas import SubscriptionResponse, SubscriptionCreate
+from .schemas import AdvancedOptInRequest, SubscriptionResponse, SubscriptionCreate
 from .services import SubscriptionService
 from .supabase_client import get_supabase_client
 
@@ -42,6 +42,15 @@ def create_subscription(
     except HTTPException as exc:  # FastAPI re-raises
         raise exc
 
+    return SubscriptionResponse(success=True, data=subscription)
+
+
+@app.post("/subscriptions/advanced-opt-in", response_model=SubscriptionResponse, status_code=200)
+def opt_in_advanced_subscription(
+    payload: AdvancedOptInRequest,
+    service: SubscriptionService = Depends(get_subscription_service),
+) -> SubscriptionResponse:
+    subscription = service.opt_in_advanced_content(payload)
     return SubscriptionResponse(success=True, data=subscription)
 
 
