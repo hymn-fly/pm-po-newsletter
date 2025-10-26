@@ -25,7 +25,16 @@ create table if not exists public.subscriptions (
     email text not null unique,
     progress_day smallint not null default 0,
     last_sent_at timestamptz,
-    subscribed_at timestamptz not null default timezone('utc', now())
+    subscribed_at timestamptz not null default timezone('utc', now()),
+    advanced_opt_in boolean not null default false,
+    advanced_opted_in_at timestamptz,
+    intro_completed_at timestamptz
+);
+
+create table if not exists public.progress_day_email_map (
+    progress_day smallint primary key,
+    automated_email_ext_id text not null,
+    automated_email_trigger_ext_id text not null
 );
 ```
 
@@ -66,7 +75,7 @@ Railway 프로젝트 하나에 아래 두 서비스를 각각 Docker로 배포�
 - 같은 프로젝트 내 서비스 간에는 `<service-name>.railway.internal:<port>` 주소로 통신할 수 있습니다.
 - 배포 후 Nginx 로그에서 `GET /api/health` 요청이 FastAPI로 전달되는지 확인하세요.
 
-## 5. Railway Cron (매일 자정)
+## 5. Railway Cron & 심화 콘텐츠 흐름 (매일 자정)
 
 Railway의 **Cron Jobs** 기능을 사용해 아래 설정으로 작업을 추가하세요.
 
@@ -75,11 +84,21 @@ Railway의 **Cron Jobs** 기능을 사용해 아래 설정으로 작업을 추�
 - Working directory: `backend`
 - Variables: API 서비스와 동일한 환경 변수를 재사용합니다.
 
-Cron 작업은 Supabase에서 `progress_day < 5`인 레코드를 조회해 메일리 API에 `course_day`를 전달한 후, 성공 시 `progress_day`를 +1 하고 `last_sent_at`을 현재 시각으로 업데이트합니다.
+Cron 작업은 매일 구독자를 조회한 뒤 다음 내용을 전송합니다.
+
+- `progress_day` 1~5: 모든 구독자에게 5일 기초 콘텐츠를 순차 발송합니다.
+- `progress_day` > 5: `advanced_opt_in = true`로 표시된 구독자만 심화 콘텐츠를 이어서 받습니다.
+- 5일차 메일 발송이 끝나면 `intro_completed_at`을 채우고, CTA 버튼을 통해 `/subscriptions/advanced-opt-in` API를 호출하면 `advanced_opt_in`과 `advanced_opted_in_at`이 갱신됩니다.
 
 ## 6. 프론트엔드 연동
 
 `index.html` 폼 제출 시 `POST /subscriptions`로 이메일을 전송하며, 성공/실패에 따라 토스트 메시지를 보여줍니다. Railway에서 배포한 API URL을 스크립트 상단의 `API_BASE_URL` 상수에 설정하세요.
+
+### 심화 콘텐츠 신청 API
+
+- **Endpoint**: `POST /subscriptions/advanced-opt-in`
+- **Body**: `{ "email": "user@example.com" }`
+- **동작**: 5일차까지 완료(`intro_completed_at`이 존재)한 사용자의 `advanced_opt_in`을 `true`로 바꾸고, 다음 날 심화 콘텐츠 발송 대기열에 추가합니다. 동일 사용자가 여러 번 호출해도 추가 부작용 없이 최신 상태를 반환합니다.
 
 ## 7. 헬스체크
 

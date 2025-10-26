@@ -14,18 +14,20 @@ class MailieClient:
         self._client = httpx.Client(base_url=self.base_url, timeout=30.0)
 
     def reserve_email_sending(self, supabase_client, email: str, progress_day: int) -> None:
-        
-        progress_daily_email_map = (supabase_client.table("progress_day_email_map")
-                    .select("automated_email_ext_id,automated_email_trigger_ext_id")
-                    .eq("progress_day", progress_day)
-                    .maybe_single()
-                    .execute())
-        
-        if not progress_daily_email_map.data:
+        mapping_response = (
+            supabase_client.table("progress_day_email_map")
+            .select("automated_email_ext_id,automated_email_trigger_ext_id")
+            .eq("progress_day", progress_day)
+            .maybe_single()
+            .execute()
+        )
+
+        mapping = mapping_response.data
+        if not mapping:
             raise ValueError(f"Progress daily email map not found for progress day {progress_day}")
-        
-        automated_email_ext_id = progress_daily_email_map.data["automated_email_ext_id"]
-        automated_email_trigger_ext_id = progress_daily_email_map.data["automated_email_trigger_ext_id"]
+
+        automated_email_ext_id = mapping["automated_email_ext_id"]
+        automated_email_trigger_ext_id = mapping["automated_email_trigger_ext_id"]
 
         payload = {
             "email": email,
@@ -37,8 +39,12 @@ class MailieClient:
             "Content-Type": "application/json",
         }
 
-        response = self._client.post(f"/api/pmletter7/automated_emails/{automated_email_ext_id}/trigger.json", json=payload, headers=headers)
-        
+        response = self._client.post(
+            f"/api/pmletter7/automated_emails/{automated_email_ext_id}/trigger.json",
+            json=payload,
+            headers=headers,
+        )
+
         if response.status_code != 200:
             raise ValueError(f"Failed to trigger email for progress day {progress_day}: {response.text}")
 
@@ -92,10 +98,19 @@ class MailieClient:
         self.close()
 
 
-def mark_email_sent(supabase_client, subscription_id: int, progress_day: int, sent_at: datetime) -> None:
-    supabase_client.table("subscriptions").update(
-        {
-            "progress_day": progress_day,
-            "last_sent_at": sent_at.isoformat(),
-        }
-    ).eq("id", subscription_id).execute()
+def mark_email_sent(
+    supabase_client,
+    subscription_id: int,
+    progress_day: int,
+    sent_at: datetime,
+    intro_completed: bool = False,
+) -> None:
+    update_payload = {
+        "progress_day": progress_day,
+        "last_sent_at": sent_at.isoformat(),
+    }
+
+    if intro_completed:
+        update_payload["intro_completed_at"] = sent_at.isoformat()
+
+    supabase_client.table("subscriptions").update(update_payload).eq("id", subscription_id).execute()
