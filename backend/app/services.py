@@ -1,9 +1,12 @@
 from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
 
 from fastapi import HTTPException, status
 from supabase import Client
 
-from .schemas import Subscription, SubscriptionCreate
+from app.email_service import MailieClient
+from app.schemas import Subscription, SubscriptionCreate
 
 SUBSCRIPTIONS_TABLE = "subscriptions"
 
@@ -13,6 +16,7 @@ class SubscriptionService:
         self.supabase = supabase
 
     def create_subscription(self, payload: SubscriptionCreate) -> Subscription:
+        
         existing = (
             self.supabase.table(SUBSCRIPTIONS_TABLE)
             .select("id,email,progress_day,last_sent_at,subscribed_at")
@@ -27,15 +31,14 @@ class SubscriptionService:
                 detail="이미 해당 이메일로 구독 중입니다.",
             )
 
-        now = datetime.now(timezone.utc).isoformat()
         insert_response = (
             self.supabase.table(SUBSCRIPTIONS_TABLE)
             .insert(
                 {
                     "email": payload.email,
-                    "progress_day": 0,
+                    "progress_day": 1,
                     "last_sent_at": None,
-                    "subscribed_at": now,
+                    "subscribed_at": datetime.now(ZoneInfo("Asia/Seoul")).isoformat(),
                 }
             )
             .execute()
@@ -48,4 +51,13 @@ class SubscriptionService:
             )
 
         record = insert_response.data[0]
+        
+        # Mailie API에 신규 구독 등록
+        try:
+            with MailieClient() as mailie_client:
+                mailie_client.create_subscription(email=payload.email)
+        except Exception as e:
+            # Mailie API 호출 실패 시 로그만 남기고 구독은 계속 진행
+            print(f"Failed to register subscription with Mailie API: {e}")
+        
         return Subscription(**record)

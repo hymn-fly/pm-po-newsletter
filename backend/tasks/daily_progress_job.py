@@ -19,7 +19,6 @@ def run() -> None:
     response = (
         supabase.table("subscriptions")
         .select("id,email,progress_day")
-        .lt("progress_day", COURSE_TOTAL_DAYS)
         .order("id")
         .execute()
     )
@@ -32,20 +31,21 @@ def run() -> None:
 
     with MailieClient() as mailie:
         for subscription in subscriptions:
-            next_day = subscription["progress_day"] + 1
+            current_day = subscription["progress_day"]
             email = subscription["email"]
 
             try:
-                mailie.send_course_email(email=email, day=next_day)
+                mailie.reserve_email_sending(
+                    supabase_client=supabase, email=email, progress_day=current_day)
                 mark_email_sent(
                     supabase_client=supabase,
                     subscription_id=subscription["id"],
-                    progress_day=next_day,
+                    progress_day=current_day + 1,
                     sent_at=now,
                 )
-                logger.info("Sent day %s content to %s", next_day, email)
+                logger.info(f"Sent day {current_day} content to {email}")
             except Exception as exc:  # noqa: BLE001 - we want to log and continue
-                logger.exception("Failed to send email for %s day %s: %s", email, next_day, exc)
+                logger.exception(f"Failed to send email for {email} day {current_day}: {exc}")
 
 
 if __name__ == "__main__":
