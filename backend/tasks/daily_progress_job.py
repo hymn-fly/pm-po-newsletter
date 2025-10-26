@@ -18,7 +18,7 @@ def run() -> None:
 
     response = (
         supabase.table("subscriptions")
-        .select("id,email,progress_day")
+        .select("id,email,progress_day,advanced_opt_in")
         .order("id")
         .execute()
     )
@@ -33,6 +33,15 @@ def run() -> None:
         for subscription in subscriptions:
             current_day = subscription["progress_day"]
             email = subscription["email"]
+            advanced_opt_in = subscription.get("advanced_opt_in", False)
+
+            if current_day > COURSE_TOTAL_DAYS and not advanced_opt_in:
+                logger.info(
+                    f"Skipping {email} because advanced content opt-in is required (progress_day={current_day})"
+                )
+                continue
+            
+            # 심화 컨텐츠 구독자들은 매 주 1번씩 발송?
 
             try:
                 mailie.reserve_email_sending(
@@ -42,6 +51,7 @@ def run() -> None:
                     subscription_id=subscription["id"],
                     progress_day=current_day + 1,
                     sent_at=now,
+                    intro_completed=current_day == COURSE_TOTAL_DAYS,
                 )
                 logger.info(f"Sent day {current_day} content to {email}")
             except Exception as exc:  # noqa: BLE001 - we want to log and continue
