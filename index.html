@@ -1,498 +1,469 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PM Letter | 내 메일함 속, 작은 PM/PO 멘토</title>
-    
-    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-    
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PM Letter - 내 메일함 속, 작은 PM/PO 멘토</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet"/>
-
     <style>
-        /* --- GLOBAL DESIGN & STYLE GUIDE --- */
-        :root {
-            --background-primary: #FFFFFF;
-            --background-secondary: #F9FAFB;
-            --text-primary: #1F2937;
-            --text-secondary: #6B7280;
-            --accent-blue: #3B82F6;
-            --border-color: #E5E7EB;
-        }
-
-        *, *::before, *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
-            background-color: var(--background-primary);
-            color: var(--text-primary);
-            line-height: 1.7;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        .container {
-            max-width: 1100px;
-            margin-left: auto;
-            margin-right: auto;
-            padding-left: 20px;
-            padding-right: 20px;
-        }
-
-        section {
-            padding: 100px 0;
-        }
-
-        h1, h2, h3 {
-            font-weight: 700;
-            line-height: 1.3;
-            letter-spacing: -0.02em;
-        }
-        h1 { font-size: 3.5rem; }
-        h2 { font-size: 2.5rem; text-align: center; }
-        h3 { font-size: 1.5rem; }
-
-        p {
-            font-size: 1.125rem;
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
-
-        /* --- VISUAL DETAILS & POLISH --- */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .btn {
-            display: inline-block;
-            background-color: var(--accent-blue);
-            color: white;
-            padding: 14px 28px;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 1rem;
-            text-decoration: none;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .btn:hover {
-            background-color: #2563EB;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px -10px var(--accent-blue);
-        }
-
-        .form-message {
-            width: 100%;
-            text-align: center;
-            margin-top: 12px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-        }
-
-        .form-message.success {
-            color: #047857;
-        }
-
-        .form-message.error {
-            color: #dc2626;
-        }
-
-        /* --- HEADER --- */
-        .header {
-            padding: 20px 0;
-            position: sticky;
-            top: 0;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            z-index: 100;
-        }
-        .nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--text-primary);
-            text-decoration: none;
-        }
-
-        /* --- SECTION 1: HERO --- */
-        .hero {
-            text-align: center;
-            padding-top: 80px;
-            padding-bottom: 120px;
-            background: linear-gradient(180deg, rgba(59, 130, 246, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
-        }
-        .hero h1 {
-            background: linear-gradient(90deg, var(--accent-blue) 0%, #1d4ed8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 24px;
-        }
-        .hero .sub-headline {
-            max-width: 650px;
-            margin: 0 auto 32px;
-        }
-        .hero-form {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        .email-input {
-            width: 320px;
-            padding: 14px;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            font-size: 1rem;
-            font-family: 'Pretendard', sans-serif;
-        }
-        .email-input:focus {
-            outline: 2px solid var(--accent-blue);
-            border-color: var(--accent-blue);
-        }
-
-        /* --- SECTION 2: CORE VALUE PROPOSITION --- */
-        .value-prop .section-headline { margin-bottom: 60px; }
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-        }
-        .card {
-            background: var(--background-primary);
-            padding: 32px;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            transition: all 0.3s ease;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-        }
-        .card-icon { margin-bottom: 20px; }
-        .card-icon i {
-            font-size: 48px;
-            color: var(--text-primary);
-            line-height: 1;
-        }
-        .card h3 { margin-bottom: 12px; }
-        .card p { font-size: 1rem; }
-
-        /* --- SECTION 3: CONTENT PREVIEW --- */
-        .content-preview .section-headline { margin-bottom: 80px; }
-        .timeline {
-            position: relative;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        .timeline-item {
-            padding: 10px 40px 30px 80px;
-            position: relative;
-        }
-        .timeline-item::before {
-            content: attr(data-day);
-            position: absolute;
-            left: -10px;
-            top: 5px;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background-color: var(--background-primary);
-            border: 3px solid var(--accent-blue);
-            color: var(--accent-blue);
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1;
-        }
-        .timeline-item h3 { font-size: 1.25rem; }
-        .timeline-item p { font-size: 1rem; }
-
-        /* --- SECTION 4: THE PM PILOT PROMISE --- */
-        .promise {
-            background-color: var(--background-secondary);
-        }
-        .promise-content {
-            max-width: 700px;
-            margin: 0 auto;
-            text-align: center;
-        }
-        .promise-icon {
-            color: var(--accent-blue);
-            margin-bottom: 24px;
-        }
-        .promise-icon i { 
-            font-size: 48px;
-            line-height: 1;
-        }
-        .promise-quote {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 16px;
-        }
-        .promise-body {
-            font-size: 1.125rem;
-        }
-
-        /* --- SECTION 5: FINAL CTA --- */
-        .final-cta {
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(59, 130, 246, 0.05) 100%);
-            text-align: center;
-        }
-        .final-cta h2 { margin-bottom: 16px; }
-        .final-cta .sub-headline {
-            max-width: 600px;
-            margin: 0 auto 32px;
-        }
-
-        /* --- SECTION 6: FOOTER --- */
-        .footer {
-            background-color: var(--text-primary);
-            color: var(--text-secondary);
-            padding: 60px 0;
-            text-align: center;
-        }
-        .footer-links {
-            margin-bottom: 20px;
-        }
-        .footer-links a {
-            color: #A1A1AA;
-            text-decoration: none;
-            margin: 0 15px;
-            transition: color 0.3s ease;
-        }
-        .footer-links a:hover {
-            color: white;
-        }
-
-        /* --- RESPONSIVE DESIGN --- */
-        @media (max-width: 768px) {
-            h1 { font-size: 2.5rem; }
-            h2 { font-size: 2rem; }
-            section { padding: 80px 0; }
-            
-            .cards-grid {
-                grid-template-columns: 1fr;
+      body {
+        font-family: 'Pretendard', sans-serif;
+        line-height: 1.7;
+        letter-spacing: -0.02em;
+        word-break: keep-all;
+        -webkit-font-smoothing: antialiased;
+      }
+      .form-message {
+        min-height: 1.5rem;
+        font-size: 0.95rem;
+        font-weight: 600;
+        transition: color 0.2s ease;
+      }
+      .form-message.success {
+        color: #047857;
+      }
+      .form-message.error {
+        color: #dc2626;
+      }
+      @keyframes popup {
+            from {
+                transform: scale(0.95);
+                opacity: 0;
             }
-            .timeline-item { padding: 10px 20px 30px 90px; }
-            .timeline-item::before { left: 0; }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        .animate-popup {
+            animation: popup 0.3s ease-out forwards;
         }
     </style>
 </head>
-<body>
-    <header class="header">
-        <div class="container">
-            <nav class="nav">
-                <a href="#" class="logo">PM Letter</a>
-                <a href="#final-cta" class="btn">구독 시작하기</a>
-            </nav>
-        </div>
-    </header>
-
-    <main>
-        <section id="hero" class="hero">
-            <div class="container">
-                <h1 class="fade-in">내 메일함 속, 작은 PM/PO 멘토</h1>
-                <p class="sub-headline fade-in" style="transition-delay: 0.1s;">복잡한 PM/PO 핵심 지식, 이제 AI가 주니어의 눈높이에 맞춰 요약해 드려요. 검증된 전문가의 인사이트로 당신의 성장을 돕는 든든한 멘토가 되어줄게요.</p>
-                <form class="hero-form subscription-form fade-in" style="transition-delay: 0.2s;">
-                    <input type="email" class="email-input" name="email" placeholder="이메일 주소를 입력해주세요" required>
-                    <button type="submit" class="btn">무료로 5일 집중 코스 시작하기</button>
-                </form>
-                <p class="form-message" role="status" aria-live="polite"></p>
+<body class="bg-white text-gray-800">
+    <div id="root">
+        <header class="sticky top-0 bg-white/80 backdrop-blur-lg z-40 border-b border-gray-200/60">
+            <div class="max-w-7xl mx-auto px-6 lg:px-8 flex justify-between items-center h-20">
+              <h1 class="text-2xl font-black text-gray-900 tracking-tighter">PM Letter</h1>
+               <a href="#subscribe" class="bg-gradient-to-br from-blue-600 to-blue-500 text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:from-blue-700 hover:to-blue-600 transition-all duration-300 ease-in-out shadow-sm hover:shadow-md transform hover:-translate-y-0.5">
+                무료 코스 신청
+              </a>
             </div>
-        </section>
-
-        <section class="value-prop container">
-            <h2 class="section-headline fade-in">PM Letter의 핵심 가치</h2>
-            <div class="cards-grid">
-                <div class="card fade-in">
-                    <div class="card-icon">
-                        <i class="ri-lightbulb-flash-line"></i>
+        </header>
+          
+        <main>
+            <!-- Hero Section -->
+            <section class="text-center pt-24 pb-28 sm:pt-28 sm:pb-32 px-6 lg:px-8 bg-white">
+              <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black text-gray-900 tracking-tighter leading-tight">
+                내 메일함 속, <br /> 작은 PM/PO 멘토
+              </h1>
+              <p class="mt-10 max-w-3xl mx-auto text-lg sm:text-xl text-gray-600 leading-relaxed">
+                복잡한 PM/PO의 핵심 지식, 이제 AI가 주니어의 눈높이에 맞춰 요약해드려요. <br />
+                빅테크 PM 현직으로 일하고 있는 검증된 전문가들의 인사이트로 <br />
+                당신의 성장을 돕는 든든한 멘토가 되어줄게요.
+              </p>
+              <div class="mt-14">
+                <a href="#subscribe" class="bg-gradient-to-br from-blue-600 to-blue-500 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:from-blue-700 hover:to-blue-600 transition-all duration-300 ease-in-out transform hover:-translate-y-1 shadow-lg hover:shadow-xl">
+                  5일 무료 코스 시작하기
+                </a>
+              </div>
+            </section>
+    
+            <!-- Section 1: Empathy & Problem -->
+            <section class="py-24 sm:py-32">
+                <div class="max-w-3xl mx-auto px-6 lg:px-8 text-center">
+                    <h2 class="text-4xl sm:text-5xl font-bold text-gray-900 tracking-tight">PM/PO, 이렇게 준비하고 계신가요?</h2>
+                    <p class="mt-6 text-lg text-gray-600">경력 1~3년차 주니어들의 현실적인 고민:</p>
+                    <div class="mt-14 text-left space-y-5 max-w-md mx-auto text-gray-700 text-lg">
+                        <p>🤔 "PM과 PO의 차이가 뭔지, 회사마다 왜 다른지 모르겠어요"</p>
+                        <p>📊 "데이터 기반 의사결정이 중요하다는데, 어떻게 시작하나요?"</p>
+                        <p>💬 "면접에서 '문제 해결 경험'을 물어보는데, 어떻게 답해야 할까요?"</p>
+                        <p>🎯 "마인드셋이 중요하다는데, 구체적으로 뭘 말하는 건가요?"</p>
                     </div>
-                    <h3>검증된 전문가의 지혜</h3>
-                    <p>Y Combinator 창업자, 유명 CPO 등 업계 리더들의 아티클과 성공 사례에서 실무의 본질을 꿰뚫는 핵심만 골라 담았어요. 더 이상 정보의 홍수 속에서 헤매지 마세요.</p>
+                    <p class="mt-16 text-xl font-semibold text-gray-800">
+                      온라인 강의를 들어도, 책을 읽어도<br/>
+                      실무에서 어떻게 적용하는지 막연하신가요?
+                    </p>
                 </div>
-                <div class="card fade-in" style="transition-delay: 0.1s;">
-                    <div class="card-icon">
-                        <i class="ri-robot-2-line"></i> 
+            </section>
+    
+            <!-- Section 2: PM Letter's Promise -->
+             <section class="py-24 sm:py-32 bg-blue-50">
+                <div class="max-w-4xl mx-auto px-6 lg:px-8 text-center">
+                    <h2 class="text-4xl sm:text-5xl font-bold text-gray-900 tracking-tight">"저희는 '스킬'이 아닌 '관점'을 이야기합니다."</h2>
+                    <p class="mt-8 text-lg sm:text-xl text-gray-700 leading-relaxed">
+                        시중에 PM 스킬을 알려주는 강의와 글은 많습니다. 하지만 성공적인 프로덕트는 화려한 스킬이 아닌, 사용자를 향한 깊은 공감과 집요한 문제 해결 과정에서 탄생합니다. PM Letter는 현업 전문가들의 지혜를 모아, 당신이 성공하는 PM의 '마인드셋'을 갖추도록 돕겠습니다. 도구에 흔들리지 않는 당신만의 프로덕트 철학을 만들어가세요.
+                    </p>
+                </div>
+            </section>
+    
+            <!-- Section: Core Values -->
+            <section class="py-24 sm:py-32">
+                <div class="max-w-7xl mx-auto px-6 lg:px-8">
+                    <h2 class="text-4xl sm:text-5xl font-bold text-center text-gray-900 tracking-tight">PM Letter의 핵심 가치</h2>
+                    <div class="mt-24 grid md:grid-cols-3 gap-10 text-left">
+                        <div class="bg-white p-8 rounded-2xl border border-gray-200/80 shadow-lg shadow-gray-200/50 hover:shadow-xl hover:border-gray-300 transition-all duration-300 ease-in-out transform hover:-translate-y-1.5">
+                           <div class="mb-6"><i class="ri-lightbulb-flash-line text-5xl text-[#3B82F6]"></i></div>
+                           <h3 class="text-xl font-bold text-gray-900">검증된 전문가의 지혜</h3>
+                           <p class="mt-3 text-gray-600 leading-relaxed">Y Combinator 창업자, 유명 CPO 등 업계 리더들의 아티클과 성공 사례에서 실무의 본질을 꿰뚫는 핵심만 골라 담았어요.</p>
+                        </div>
+                        <div class="bg-white p-8 rounded-2xl border border-gray-200/80 shadow-lg shadow-gray-200/50 hover:shadow-xl hover:border-gray-300 transition-all duration-300 ease-in-out transform hover:-translate-y-1.5">
+                           <div class="mb-6"><i class="ri-robot-2-line text-5xl text-[#3B82F6]"></i></div>
+                           <h3 class="text-xl font-bold text-gray-900">AI 기반의 스마트한 요약</h3>
+                           <p class="mt-3 text-gray-600 leading-relaxed">AI가 복잡하고 긴 원문을 주니어의 시각에서 가장 중요한 내용만 남기고 압축해 드려요. 아낀 시간만큼 성장에만 집중하면 돼요.</p>
+                        </div>
+                        <div class="bg-white p-8 rounded-2xl border border-gray-200/80 shadow-lg shadow-gray-200/50 hover:shadow-xl hover:border-gray-300 transition-all duration-300 ease-in-out transform hover:-translate-y-1.5">
+                           <div class="mb-6"><i class="ri-compass-3-line text-5xl text-[#3B82F6]"></i></div>
+                           <h3 class="text-xl font-bold text-gray-900">성공하는 PM의 사고방식</h3>
+                           <p class="mt-3 text-gray-600 leading-relaxed">뛰어난 PM은 스킬이 아닌 사고방식에서 차이가 납니다. 사용자의 진짜 문제를 파고드는 집요함을 갖추도록 돕습니다.</p>
+                        </div>
                     </div>
-                    <h3>AI 기반의 스마트한 요약</h3>
-                    <p>저희 AI가 복잡하고 긴 분량의 원문을 주니어의 시각에서 가장 중요한 내용만 남기고 압축해 드려요. 당신은 아낀 시간만큼 성장에만 집중하면 돼요.</p>
                 </div>
-                <div class="card fade-in" style="transition-delay: 0.2s;">
-                    <div class="card-icon">
-                        <i class="ri-compass-3-line"></i>
+            </section>
+    
+            <!-- Section: Curriculum -->
+            <section class="py-24 sm:py-32 bg-gray-50/80">
+                <div class="max-w-5xl mx-auto px-6 lg:px-8">
+                    <h2 class="text-4xl sm:text-5xl font-bold text-center text-gray-900 tracking-tight">📚 5일 무료 코스 커리큘럼</h2>
+                    <p class="text-center text-gray-600 mt-6 text-lg">⏱️ 매일 5분 투자로 완성하는 실전 역량</p>
+                    <div class="mt-24 space-y-10">
+                        <div class="p-8 bg-white rounded-2xl border border-gray-200/80 shadow-lg shadow-gray-200/60 hover:shadow-xl transition-shadow duration-300">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 bg-blue-100 text-blue-600 w-14 h-14 rounded-full flex items-center justify-center font-black text-2xl">1</div>
+                                <div class="ml-6 flex-1">
+                                    <h3 class="text-xl font-bold text-gray-900">Day 1 — 직무 이해의 기초</h3>
+                                    <p class="mt-1 text-gray-600">PM, PO, PL, 서비스기획자의 진짜 차이</p>
+                                    <ul class="mt-6 space-y-3 text-gray-700">
+                                      <li class="flex items-start">
+                                        <svg class="w-5 h-5 text-blue-500 mr-3.5 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"></path></svg>
+                                        <span>회사마다 다른 역할 명칭, 핵심은 무엇인가?</span>
+                                      </li>
+                                      <li class="flex items-start">
+                                        <svg class="w-5 h-5 text-blue-500 mr-3.5 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"></path></svg>
+                                        <span>"무엇을(What)" vs "어떻게(How)" vs "왜(Why)"의 구분</span>
+                                      </li>
+                                      <li class="flex items-start">
+                                        <svg class="w-5 h-5 text-blue-500 mr-3.5 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"></path></svg>
+                                        <span>각 직무가 하루를 어떻게 보내는지 실제 루틴 공개</span>
+                                      </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-8 bg-white rounded-2xl border border-gray-200/80 shadow-lg shadow-gray-200/60 hover:shadow-xl transition-shadow duration-300">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 bg-blue-100 text-blue-600 w-14 h-14 rounded-full flex items-center justify-center font-black text-2xl">2</div>
+                                <div class="ml-6 flex-1">
+                                    <h3 class="text-xl font-bold text-gray-900">Day 2 — 핵심 역량 마스터</h3>
+                                    <p class="mt-1 text-gray-600">1,000개 이상 JD 분석으로 발견한 4가지 공통 역량</p>
+                                    <ul class="mt-6 space-y-3 text-gray-700">
+                                      <li class="flex items-start">
+                                        <svg class="w-5 h-5 text-blue-500 mr-3.5 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"></path></svg>
+                                        <span>데이터 기반 사고력: GA, Amplitude 활용법</span>
+                                      </li>
+                                      <li class="flex items-start">
+                                        <svg class="w-5 h-5 text-blue-500 mr-3.5 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"></path></svg>
+                                        <span>직군 간 커뮤니케이션: 개발·디자인·마케팅 조율법</span>
+                                      </li>
+                                      <li class="flex items-start">
+                                        <svg class="w-5 h-5 text-blue-500 mr-3.5 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"></path></svg>
+                                        <span>문제 정의 능력: Pain Point 도출 프로세스</span>
+                                      </li>
+                                      <li class="flex items-start">
+                                        <svg class="w-5 h-5 text-blue-500 mr-3.5 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"></path></svg>
+                                        <span>Ownership: 결과까지 책임지는 실행력</span>
+                                      </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-8 bg-white rounded-2xl border border-gray-200/80 shadow-lg shadow-gray-200/60 hover:shadow-xl transition-shadow duration-300">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 bg-blue-100 text-blue-600 w-14 h-14 rounded-full flex items-center justify-center font-black text-2xl">3</div>
+                                <div class="ml-6 flex-1">
+                                    <h3 class="text-xl font-bold text-gray-900">Day 3 — 성공 사례 분석</h3>
+                                    <p class="mt-1 text-gray-600">Uber의 실시간 수요 예측 시스템 혁신</p>
+                                    <ul class="mt-6 space-y-3 text-gray-700">
+                                      <li class="flex items-start">
+                                        <svg class="w-5 h-5 text-blue-500 mr-3.5 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"></path></svg>
+                                        <span>데이터로 사용자 문제를 정의하는 법</span>
+                                      </li>
+                                      <li class="flex items-start">
+                                        <svg class="w-5 h-5 text-blue-500 mr-3.5 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"></path></svg>
+                                        <span>다양한 직군과 협업하며 목표 정렬하기</span>
+                                      </li>
+                                      <li class="flex items-start">
+                                        <svg class="w-5 h-5 text-blue-500 mr-3.5 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"></path></svg>
+                                        <span>ML 기반 실험 설계와 A/B 테스트 프로세스</span>
+                                      </li>
+                                      <li class="flex items-start">
+                                        <svg class="w-5 h-5 text-blue-500 mr-3.5 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"></path></svg>
+                                        <span>대기시간 25% 단축, NPS 개선의 비밀</span>
+                                      </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-8 bg-white rounded-2xl border border-gray-200/80 shadow-lg shadow-gray-200/60 hover:shadow-xl transition-shadow duration-300">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 bg-blue-100 text-blue-600 w-14 h-14 rounded-full flex items-center justify-center font-black text-2xl">4</div>
+                                <div class="ml-6 flex-1">
+                                    <h3 class="text-xl font-bold text-gray-900">Day 4 — 실패 사례 분석</h3>
+                                    <p class="mt-1 text-gray-600">이마트몰은 왜 실패했는가?</p>
+                                    <ul class="mt-6 space-y-3 text-gray-700">
+                                      <li class="flex items-start">
+                                        <svg class="w-5 h-5 text-blue-500 mr-3.5 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"></path></svg>
+                                        <span>공급자 중심 vs 사용자 중심 사고의 차이</span>
+                                      </li>
+                                      <li class="flex items-start">
+                                        <svg class="w-5 h-5 text-blue-500 mr-3.5 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"></path></svg>
+                                        <span>데이터를 가지고도 실패하는 이유</span>
+                                      </li>
+                                      <li class="flex items-start">
+                                        <svg class="w-5 h-5 text-blue-500 mr-3.5 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"></path></svg>
+                                        <span>협업 구조가 고객 경험을 망치는 순간</span>
+                                      </li>
+                                      <li class="flex items-start">
+                                        <svg class="w-5 h-5 text-blue-500 mr-3.5 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"></path></svg>
+                                        <span>똑같은 실수를 반복하지 않는 법</span>
+                                      </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-8 bg-white rounded-2xl border border-gray-200/80 shadow-lg shadow-gray-200/60 hover:shadow-xl transition-shadow duration-300">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 bg-blue-100 text-blue-600 w-14 h-14 rounded-full flex items-center justify-center font-black text-2xl">5</div>
+                                <div class="ml-6 flex-1">
+                                    <h3 class="text-xl font-bold text-gray-900">Day 5 — 면접 & 마인드셋</h3>
+                                    <p class="mt-1 text-gray-600">면접 질문 속에 숨은 본질 이해하기</p>
+                                    <ul class="mt-6 space-y-3 text-gray-700">
+                                      <li class="flex items-start">
+                                        <svg class="w-5 h-5 text-blue-500 mr-3.5 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"></path></svg>
+                                        <span>실제 면접에서 자주 나오는 질문 분석</span>
+                                      </li>
+                                      <li class="flex items-start">
+                                        <svg class="w-5 h-5 text-blue-500 mr-3.5 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"></path></svg>
+                                        <span>면접관이 정말 확인하고 싶은 것은?</span>
+                                      </li>
+                                      <li class="flex items-start">
+                                        <svg class="w-5 h-5 text-blue-500 mr-3.5 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"></path></svg>
+                                        <span>토니 셰이(Zappos), 김민지(토스 CPO)가 말하는 PM 마인드셋</span>
+                                      </li>
+                                      <li class="flex items-start">
+                                        <svg class="w-5 h-5 text-blue-500 mr-3.5 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"></path></svg>
+                                        <span>"정답이 아닌 올바른 질문을 하는 사람"이 되는 법</span>
+                                      </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <h3>성공하는 PM의 사고방식</h3>
-                    <p>뛰어난 PM은 스킬이 아닌 사고방식에서 차이가 납니다. 사용자의 진짜 문제를 파고드는 집요함, 데이터 너머의 맥락을 읽는 통찰력. 저희는 당신이 단단한 PM의 마인드셋을 갖추도록 돕습니다.</p>
                 </div>
+            </section>
+            
+            <!-- Section 4: What You Get -->
+            <section class="py-24 sm:py-32">
+                <div class="max-w-7xl mx-auto px-6 lg:px-8">
+                    <h2 class="text-4xl sm:text-5xl font-bold text-center text-gray-900 tracking-tight">✅ 5일 완료 후 여러분은:</h2>
+                    <div class="mt-24 grid md:grid-cols-2 lg:grid-cols-3 gap-10 text-left">
+                        <div class="bg-white p-8 rounded-2xl border border-gray-200/80 shadow-lg shadow-gray-200/50 hover:shadow-xl hover:border-gray-300 transition-all duration-300 ease-in-out">
+                            <h3 class="text-xl font-bold text-gray-900">직무 이해도 ↑</h3>
+                            <ul class="mt-4 space-y-2.5 list-disc list-inside text-gray-600">
+                                <li>PM/PO/PL의 역할을 명확히 구분하고 설명 가능</li>
+                                <li>회사별 JD를 보고 핵심 역량 파악 가능</li>
+                            </ul>
+                        </div>
+                         <div class="bg-white p-8 rounded-2xl border border-gray-200/80 shadow-lg shadow-gray-200/50 hover:shadow-xl hover:border-gray-300 transition-all duration-300 ease-in-out">
+                            <h3 class="text-xl font-bold text-gray-900">면접 준비 완료</h3>
+                            <ul class="mt-4 space-y-2.5 list-disc list-inside text-gray-600">
+                                <li>"가장 어려웠던 문제 해결 경험" 답변 가능</li>
+                                <li>데이터 기반 의사결정 사례 구조화 가능</li>
+                                <li>마인드셋 질문에 대한 명확한 철학 정립</li>
+                            </ul>
+                        </div>
+                         <div class="bg-white p-8 rounded-2xl border border-gray-200/80 shadow-lg shadow-gray-200/50 hover:shadow-xl hover:border-gray-300 transition-all duration-300 ease-in-out">
+                            <h3 class="text-xl font-bold text-gray-900">실무 적용력 강화</h3>
+                             <ul class="mt-4 space-y-2.5 list-disc list-inside text-gray-600">
+                                <li>사용자 중심 사고로 문제 재정의하기</li>
+                                <li>직군 간 협업에서 공통 언어 찾기</li>
+                                <li>데이터로 의사결정 근거 만들기</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+    
+            <!-- Section 5: Testimonials -->
+            <section class="py-24 sm:py-32 bg-gray-50/80">
+              <div class="max-w-7xl mx-auto px-6 lg:px-8">
+                <h2 class="text-4xl sm:text-5xl font-bold text-center text-gray-900 tracking-tight">💬 먼저 경험한 분들의 이야기</h2>
+                <div class="mt-24 grid md:grid-cols-3 gap-10">
+                    <div class="bg-white p-8 rounded-2xl border border-gray-200/80 shadow-lg shadow-gray-200/50 hover:shadow-xl transition-shadow duration-300">
+                      <p class="text-gray-700 leading-relaxed text-lg">"PM과 PO의 차이를 이렇게 명확히 설명해준 곳은 처음이에요. Day 3 Uber 사례가 특히 도움됐습니다."</p>
+                      <p class="mt-6 font-semibold text-gray-900">— 김*민, <span class="text-gray-500 font-normal">취업 준비생</span></p>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl border border-gray-200/80 shadow-lg shadow-gray-200/50 hover:shadow-xl transition-shadow duration-300">
+                      <p class="text-gray-700 leading-relaxed text-lg">"면접 준비하면서 Day 5가 가장 유용했어요. 마인드셋 질문에 대한 답을 찾았습니다."</p>
+                      <p class="mt-6 font-semibold text-gray-900">— 이*지, <span class="text-gray-500 font-normal">PM 1년차</span></p>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl border border-gray-200/80 shadow-lg shadow-gray-200/50 hover:shadow-xl transition-shadow duration-300">
+                      <p class="text-gray-700 leading-relaxed text-lg">"이마트몰 실패 사례가 인상적이었어요. 반대로 생각하니 무엇을 해야 할지 명확해졌습니다."</p>
+                      <p class="mt-6 font-semibold text-gray-900">— 박*수, <span class="text-gray-500 font-normal">서비스기획자 2년차</span></p>
+                    </div>
+                </div>
+              </div>
+            </section>
+            
+            <!-- Section 8: Final CTA -->
+            <section id="subscribe" class="py-24 sm:py-32 bg-blue-50">
+              <div class="max-w-4xl mx-auto px-6 lg:px-8 text-center">
+                  <h2 class="text-4xl sm:text-5xl font-bold text-gray-900 tracking-tight">🚀 지금 바로 시작하세요</h2>
+                  <p class="mt-6 text-lg sm:text-xl text-gray-700">내일 아침부터 현직 전문가의 실전 노하우가 당신의 메일함에 도착합니다</p>
+                  <div class="mt-16 max-w-lg mx-auto bg-white p-8 sm:p-10 rounded-2xl shadow-xl">
+                    <h3 class="text-2xl font-bold text-gray-900">
+                      📧 5일 무료 코스 <br/> 지금 신청하기
+                    </h3>
+                    <p class="mt-3 text-gray-600 leading-relaxed">
+                      ⏱️ 30초면 가입 완료<br />
+                      📊 이미 1,247명이 함께 성장 중
+                    </p>
+                    <form class="mt-8 subscription-form">
+                      <div class="flex flex-col sm:flex-row gap-4">
+                        <input
+                          type="email"
+                          placeholder="이메일 주소를 입력하세요"
+                          required
+                          name="email"
+                          class="w-full px-5 py-3.5 border border-gray-300 bg-white text-gray-900 rounded-lg focus:ring-4 focus:ring-blue-200 focus:border-blue-500 placeholder-gray-500 transition-shadow"
+                        />
+                        <button
+                          type="submit"
+                          class="w-full sm:w-auto bg-gradient-to-br from-blue-600 to-blue-500 text-white px-7 py-3.5 rounded-lg font-semibold hover:from-blue-700 hover:to-blue-600 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg flex-shrink-0"
+                        >
+                          무료로 시작하기
+                        </button>
+                      </div>
+                      <p class="form-message mt-4 text-sm text-center text-gray-600"></p>
+                      <p class="mt-4 text-xs text-gray-500">✓ Day 1은 내일 오전 10시에 도착합니다</p>
+                    </form>
+                  </div>
+              </div>
+            </section>
+    
+            <!-- Section 9: FAQ -->
+            <section class="py-24 sm:py-32 bg-gray-50/80">
+              <div class="max-w-4xl mx-auto px-6 lg:px-8">
+                <h2 class="text-4xl sm:text-5xl font-bold text-center text-gray-900 tracking-tight">자주 묻는 질문</h2>
+                <div class="mt-20 space-y-6">
+                    <div class="bg-white p-6 rounded-lg border border-gray-200/80 shadow-sm">
+                      <h3 class="font-semibold text-lg text-gray-900">Q. 완전 초보자도 이해할 수 있나요?</h3>
+                      <p class="mt-2 text-gray-600">A. 네! PM/PO가 처음이라도 Day 1부터 차근차근 설명합니다.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg border border-gray-200/80 shadow-sm">
+                      <h3 class="font-semibold text-lg text-gray-900">Q. 하루에 얼마나 시간이 걸리나요?</h3>
+                      <p class="mt-2 text-gray-600">A. 평균 5분입니다. 출퇴근 시간에 읽기 딱 좋습니다.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg border border-gray-200/80 shadow-sm">
+                      <h3 class="font-semibold text-lg text-gray-900">Q. Uber, 이마트몰 같은 사례 분석이 정말 도움이 되나요?</h3>
+                      <p class="mt-2 text-gray-600">A. 네! 실제 사례를 통해 이론을 실무에 적용하는 법을 배웁니다.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg border border-gray-200/80 shadow-sm">
+                      <h3 class="font-semibold text-lg text-gray-900">Q. 면접 준비에도 도움이 되나요?</h3>
+                      <p class="mt-2 text-gray-600">A. Day 5에서 실제 면접 질문과 답변 전략을 다룹니다.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg border border-gray-200/80 shadow-sm">
+                      <h3 class="font-semibold text-lg text-gray-900">Q. 주간 뉴스레터는 유료인가요?</h3>
+                      <p class="mt-2 text-gray-600">A. 5일 코스 완료 후 선택적으로 신청할 수 있는 무료 심화 콘텐츠입니다.</p>
+                    </div>
+                </div>
+              </div>
+            </section>
+        </main>
+    
+        <footer class="bg-gray-900 text-white">
+            <div class="max-w-7xl mx-auto py-16 px-6 lg:px-8 text-center text-sm text-gray-400">
+              <p>&copy; 2024 PM Letter. All rights reserved.</p>
+              <div class="mt-6 flex justify-center gap-x-6">
+                <a href="#" class="hover:text-white transition-colors">이용약관</a>
+                <a href="#" class="hover:text-white transition-colors">개인정보 처리방침</a>
+              </div>
             </div>
-        </section>
-
-        <section class="content-preview container">
-            <h2 class="section-headline fade-in">5일 집중 코스 커리큘럼</h2>
-            <div class="timeline">
-                <div class="timeline-item fade-in" data-day="Day 1">
-                    <h3>PM, PO, 서비스기획자는 어떻게 하루를 보낼까?</h3>
-                    <p>헷갈리기 쉬운 직무별 역할을 명확히 구분하고, 실제 하루 업무를 통해 각 직무의 핵심을 파악합니다.</p>
-                </div>
-                <div class="timeline-item fade-in" data-day="Day 2">
-                    <h3>좋은 PM/PO에게 필요한 4가지 공통 역량</h3>
-                    <p>데이터 기반 사고, 커뮤니케이션, 문제 정의, Ownership. 모든 기업이 공통적으로 강조하는 핵심 역량을 배웁니다.</p>
-                </div>
-                <div class="timeline-item fade-in" data-day="Day 3">
-                    <h3>성공 사례: Uber는 어떻게 데이터로 '기다림'을 해결했나?</h3>
-                    <p>데이터, 협업, 문제 정의, Ownership이 어떻게 탁월한 사용자 경험 개선으로 이어지는지 Uber 사례로 학습합니다.</p>
-                </div>
-                 <div class="timeline-item fade-in" data-day="Day 4">
-                    <h3>실패 사례: 이마트몰은 왜 사용자에게 외면받았나?</h3>
-                    <p>'공급자 중심 사고'가 PM/PO의 역량을 어떻게 무너뜨리는지 이마트몰의 실패를 통해 분석합니다.</p>
-                </div>
-                 <div class="timeline-item fade-in" data-day="Day 5">
-                    <h3>면접 질문에 숨은 본질: PM/PO의 마인드셋</h3>
-                    <p>면접관이 진짜 확인하고 싶은 '사용자 중심 사고'를 면접 질문을 통해 증명하는 법을 알아봅니다.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="promise">
-            <div class="container promise-content fade-in">
-                <div class="promise-icon">
-                    <i class="ri-bookmark-line"></i>
-                </div>
-                <h2 class="section-headline">PM Letter의 약속</h2>
-                <p class="promise-quote">"저희는 '스킬'이 아닌 '관점'을 이야기합니다."</p>
-                <p class="promise-body">시중에 PM 스킬을 알려주는 강의와 글은 많습니다. 하지만 성공적인 프로덕트는 화려한 스킬이 아닌, 사용자를 향한 깊은 공감과 집요한 문제 해결 과정에서 탄생합니다. PM Letter는 현업 전문가들의 지혜를 모아, 당신이 성공하는 PM의 '마인드셋'을 갖추도록 돕겠습니다. 도구에 흔들리지 않는 당신만의 프로덕트 철학을 만들어가세요.</p>
-            </div>
-        </section>
-
-        <section id="final-cta" class="final-cta">
-            <div class="container fade-in">
-                <h2 class="section-headline">성장의 기회를 놓치지 마세요</h2>
-                <p class="sub-headline">단 5일의 투자로, 가장 먼저 성장의 기회를 잡으세요.</p>
-                <form class="hero-form subscription-form">
-                    <input type="email" class="email-input" name="email" placeholder="이메일 주소를 입력해주세요" required>
-                    <button type="submit" class="btn">지금 구독 시작하기</button>
-                </form>
-                <p class="form-message" role="status" aria-live="polite"></p>
-            </div>
-        </section>
-    </main>
-
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-links">
-                <a href="#">About Us</a>
-                <a href="#">Contact</a>
-                <a href="#">Privacy Policy</a>
-            </div>
-            <p>© 2025 PM Letter. All rights reserved.</p>
-        </div>
-    </footer>
-
+        </footer>
+    </div>
     <script>
-        // --- JAVASCRIPT FOR FADE-IN ANIMATION ---
-        const faders = document.querySelectorAll('.fade-in');
+      const API_BASE_URL = (window.PM_LETTER_API_BASE_URL || `${window.location.origin}/api`).replace(/\/$/, '');
+      const SUBSCRIPTION_ENDPOINT = `${API_BASE_URL}/subscriptions`;
 
-        const appearOptions = {
-            threshold: 0.2,
-            rootMargin: "0px 0px -50px 0px"
-        };
+      function setMessage(element, text, variant) {
+        if (!element) return;
+        element.textContent = text;
+        element.classList.remove('success', 'error');
+        if (variant) {
+          element.classList.add(variant);
+        }
+      }
 
-        const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
-            entries.forEach(entry => {
-                if (!entry.isIntersecting) {
-                    return;
-                } else {
-                    entry.target.classList.add('visible');
-                    appearOnScroll.unobserve(entry.target);
-                }
-            });
-        }, appearOptions);
+      async function submitSubscription(form, messageEl) {
+        const formData = new FormData(form);
+        const email = formData.get('email');
 
-        faders.forEach(fader => {
-            appearOnScroll.observe(fader);
-        });
-
-        const API_BASE_URL = (window.PM_LETTER_API_BASE_URL || `${window.location.origin}/api`).replace(/\/$/, '');
-        const SUBSCRIPTION_ENDPOINT = `${API_BASE_URL}/subscriptions`;
-
-        function setMessage(element, text, variant) {
-            element.textContent = text;
-            element.classList.remove('success', 'error');
-            if (variant) {
-                element.classList.add(variant);
-            }
+        if (!email) {
+          setMessage(messageEl, '이메일을 입력해주세요.', 'error');
+          return;
         }
 
-        async function submitSubscription(form, messageEl) {
-            const formData = new FormData(form);
-            const email = formData.get('email');
+        const submitButton = form.querySelector('button[type="submit"]');
+        const originalText = submitButton ? submitButton.textContent : '';
 
-            if (!email) {
-                setMessage(messageEl, '이메일을 입력해주세요.', 'error');
-                return;
-            }
-
-            const submitButton = form.querySelector('button[type="submit"]');
-            const originalText = submitButton.textContent;
-            submitButton.disabled = true;
-            submitButton.textContent = '등록 중...';
-            setMessage(messageEl, '잠시만 기다려주세요...', null);
-
-            try {
-                const response = await fetch(SUBSCRIPTION_ENDPOINT, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ email })
-                });
-
-                const result = await response.json();
-
-                if (!response.ok) {
-                    const message = result?.detail || result?.message || '이미 등록된 이메일이거나 오류가 발생했습니다.';
-                    throw new Error(message);
-                }
-
-                setMessage(messageEl, '등록이 완료되었어요! 이메일을 확인해주세요.', 'success');
-                form.reset();
-            } catch (error) {
-                setMessage(messageEl, error.message || '오류가 발생했어요. 잠시 후 다시 시도해주세요.', 'error');
-            } finally {
-                submitButton.disabled = false;
-                submitButton.textContent = originalText;
-            }
+        if (submitButton) {
+          submitButton.disabled = true;
+          submitButton.textContent = '등록 중...';
         }
 
-        document.querySelectorAll('.subscription-form').forEach(form => {
-            const messageEl = form.nextElementSibling;
+        setMessage(messageEl, '잠시만 기다려주세요...', null);
 
-            form.addEventListener('submit', event => {
-                event.preventDefault();
-                submitSubscription(form, messageEl);
-            });
+        try {
+          const response = await fetch(SUBSCRIPTION_ENDPOINT, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email })
+          });
+
+          const result = await response.json();
+
+          if (!response.ok) {
+            const message = result?.detail || result?.message || '이미 등록된 이메일이거나 오류가 발생했습니다.';
+            throw new Error(message);
+          }
+
+          setMessage(messageEl, '등록이 완료되었어요! 이메일을 확인해주세요.', 'success');
+          form.reset();
+        } catch (error) {
+          setMessage(messageEl, error.message || '오류가 발생했어요. 잠시 후 다시 시도해주세요.', 'error');
+        } finally {
+          if (submitButton) {
+            submitButton.disabled = false;
+            submitButton.textContent = originalText;
+          }
+        }
+      }
+
+      document.querySelectorAll('.subscription-form').forEach(form => {
+        const messageEl = form.querySelector('.form-message') || form.nextElementSibling;
+
+        form.addEventListener('submit', event => {
+          event.preventDefault();
+          submitSubscription(form, messageEl);
         });
+      });
     </script>
 </body>
 </html>

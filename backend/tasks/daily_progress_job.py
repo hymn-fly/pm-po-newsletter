@@ -41,7 +41,9 @@ def run() -> None:
                 )
                 continue
             
-            # 심화 컨텐츠 구독자들은 매 주 1번씩 발송?
+            if advanced_opt_in and now.weekday() != 6:
+                logger.info(f"Skipping advanced content sending for {email} because it's not Sunday")
+                continue
 
             try:
                 mailie.reserve_email_sending(
