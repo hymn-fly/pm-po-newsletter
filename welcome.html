@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PM Letter | 구독을 환영합니다!</title>
+    <title>PM Letter | 진짜 성장을 위한 다음 스텝</title>
     
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet"/>
@@ -25,23 +25,37 @@
             color: var(--text-primary);
             line-height: 1.7;
             -webkit-font-smoothing: antialiased;
+            word-break: keep-all;
         }
+        .form-message {
+            margin-top: 16px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            min-height: 1.5rem;
+        }
+        .form-message.success { color: #047857; }
+        .form-message.error { color: #dc2626; }
         .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
         section { padding: 100px 0; }
-        h1, h2, h3 { font-weight: 700; line-height: 1.3; letter-spacing: -0.02em; }
-        h1 { font-size: 3.5rem; }
+        h1, h2, h3 { font-weight: 800; line-height: 1.3; letter-spacing: -0.02em; }
+        h1 { font-size: 3.2rem; }
         h2 { font-size: 2.5rem; text-align: center; }
         h3 { font-size: 1.5rem; }
         p { font-size: 1.125rem; color: var(--text-secondary); font-weight: 500; }
         .btn { display: inline-block; background-color: var(--accent-blue); color: white; padding: 14px 28px; border-radius: 8px; font-weight: 700; font-size: 1rem; text-decoration: none; border: none; cursor: pointer; transition: all 0.3s ease; }
         .btn:hover { background-color: #2563EB; transform: translateY(-2px); box-shadow: 0 10px 20px -10px var(--accent-blue); }
+        .btn-large { padding: 18px 36px; font-size: 1.125rem; }
 
         .header { padding: 20px 0; position: sticky; top: 0; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); z-index: 100; border-bottom: 1px solid var(--border-color); }
         .nav { display: flex; justify-content: space-between; align-items: center; }
         .logo { font-size: 1.5rem; font-weight: 800; color: var(--text-primary); text-decoration: none; }
-        .hero { text-align: center; padding: 80px 0 100px; }
-        .hero h1 { background: linear-gradient(90deg, var(--accent-blue) 0%, #1d4ed8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 24px; }
-        .hero .sub-headline { max-width: 650px; margin: 0 auto 32px; font-size: 1.25rem; }
+        
+        #subscribe-form {
+            background-color: var(--background-secondary);
+            text-align: center;
+            padding: 80px 0;
+        }
         .subscribe-success-banner {
             background-color: #E0F2FE;
             color: #0C4A6E;
@@ -52,49 +66,101 @@
             font-weight: 600;
             display: inline-block;
         }
-        .section-headline {
-            margin-bottom: 60px;
+        #subscribe-form h1 {
+            background: linear-gradient(90deg, var(--accent-blue) 0%, #1d4ed8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 24px;
         }
+        #subscribe-form .sub-headline { max-width: 650px; margin: 0 auto 40px; font-size: 1.25rem; }
+
+        .subscribe-form-wrapper {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+            transition: box-shadow 0.3s ease, border-color 0.3s ease;
+            background-color: var(--background-primary);
+        }
+        .subscribe-form-wrapper:focus-within {
+             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.4);
+             border-color: var(--accent-blue);
+        }
+        .subscribe-form-wrapper input {
+            flex-grow: 1;
+            border: none;
+            padding: 16px 20px;
+            font-size: 1rem;
+            font-family: 'Pretendard', sans-serif;
+            font-weight: 500;
+            outline: none;
+            min-width: 0;
+            background-color: #F9FAFB;
+        }
+        .subscribe-form-wrapper .btn {
+            border-radius: 0 8px 8px 0;
+            white-space: nowrap;
+            box-shadow: none;
+            transform: none;
+        }
+        .subscribe-form-wrapper .btn:hover { transform: none; }
+
+        .section-headline { margin-bottom: 60px; }
+        .section-sub-headline { max-width: 700px; margin: -40px auto 60px; font-size: 1.2rem; color: var(--text-secondary); text-align: center; }
+
+        .comparison-section { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: flex-start; }
+        .comparison-card { padding: 32px; border: 1px solid var(--border-color); border-radius: 12px; background-color: white; }
+        .comparison-card h3 { font-size: 1.25rem; font-weight: 800; margin-bottom: 16px; color: var(--text-primary);}
+        .comparison-card ul { list-style: none; }
+        .comparison-card li { margin-bottom: 12px; font-weight: 600; display: flex; align-items: flex-start; }
+        .comparison-card li i { color: var(--accent-blue); margin-right: 10px; font-size: 1.2rem; line-height: 1.5; }
+        .comparison-card.pro h3 { color: var(--accent-blue); }
+        .comparison-card.pro li i { color: var(--accent-blue); }
+
         .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
-        .card { background: var(--background-primary); padding: 32px; border-radius: 12px; border: 1px solid var(--border-color); }
+        .card { background: var(--background-primary); padding: 32px; border-radius: 12px; border: 1px solid var(--border-color); text-align: left; transition: all 0.3s ease; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px -5px rgba(0,0,0,0.07); }
         .card-icon { margin-bottom: 20px; }
-        .card-icon i { font-size: 48px; color: var(--text-primary); line-height: 1; }
+        .card-icon i { font-size: 32px; color: var(--accent-blue); line-height: 1; display: inline-flex; justify-content: center; align-items: center; width: 56px; height: 56px; background-color: #EFF6FF; border-radius: 12px; }
         .card h3 { margin-bottom: 12px; }
         .card p { font-size: 1rem; }
         
-        .promise {
-            background-color: var(--background-secondary);
-        }
-        .promise-content {
-            max-width: 700px;
-            margin: 0 auto;
-            text-align: center;
-        }
-        .promise-icon {
-            color: var(--accent-blue);
-            margin-bottom: 24px;
-        }
-        .promise-icon i { 
-            font-size: 48px;
-            line-height: 1;
-        }
-        .promise-quote {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 16px;
-        }
-        .promise-body {
-            font-size: 1.1rem;
-        }
+        #who-is-it-for { background-color: var(--background-secondary); }
+        .checklist { max-width: 800px; margin: 0 auto; }
+        .check-item { display: flex; align-items: flex-start; margin-bottom: 24px; font-size: 1.1rem; }
+        .check-item i { font-size: 24px; color: var(--accent-blue); margin-right: 16px; margin-top: 4px; }
+        .check-item p { color: var(--text-primary); font-weight: 600; }
+
+        .final-cta { text-align: center; }
+        .final-cta .promise-icon { color: var(--accent-blue); margin-bottom: 40px; }
+        .final-cta .promise-icon i { font-size: 48px; line-height: 1; }
+        .final-cta .promise-quote { font-size: 1.75rem; font-weight: 700; color: var(--text-primary); margin: 24px auto 16px; max-width: 700px; }
+        .final-cta .promise-body { font-size: 1.2rem; max-width: 700px; margin: 0 auto 60px; }
 
         .footer { background-color: var(--text-primary); color: var(--text-secondary); padding: 60px 0; text-align: center; }
         .footer-links { margin-bottom: 20px; }
         .footer-links a { color: #A1A1AA; text-decoration: none; margin: 0 15px; transition: color 0.3s ease; }
         .footer-links a:hover { color: white; }
 
-        @media (max-width: 992px) { .cards-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 768px) { h1 { font-size: 2.5rem; } h2 { font-size: 2rem; } section { padding: 80px 0; } .cards-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 992px) {
+            .cards-grid { grid-template-columns: 1fr; }
+            .comparison-section { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            section { padding: 80px 0; }
+            #subscribe-form { padding: 60px 0; }
+            .subscribe-form-wrapper { flex-direction: column; border: none; box-shadow: none; background: transparent; }
+            .subscribe-form-wrapper input { border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 12px; text-align: center; background-color: white; }
+            .subscribe-form-wrapper .btn { border-radius: 8px; }
+            .comparison-card { padding: 24px; }
+            .final-cta .promise-quote { font-size: 1.5rem; }
+            .final-cta .promise-body { font-size: 1.1rem; }
+        }
     </style>
 </head>
 <body>
@@ -102,55 +168,113 @@
         <div class="container">
             <nav class="nav">
                 <a href="#" class="logo">PM Letter</a>
-                <a href="#" class="btn">아카이브 바로가기</a>
+                <a href="#subscribe-form" class="btn">정식 구독 시작하기</a>
             </nav>
         </div>
     </header>
 
     <main>
-        <section id="hero" class="hero">
+        <section id="subscribe-form">
             <div class="container">
                 <div class="subscribe-success-banner">
-                    🎉 정식 구독이 완료되었습니다!
+                     🎉 5일 코스 완주를 축하합니다!
                 </div>
-                <h1>5일간의 여정, 완주를 축하합니다!</h1>
-                <p class="sub-headline">지난 5일간 PM의 핵심 역량을 다지셨다면, 이제부터는 창업가의 시선으로 문제를 정의하고 성장으로 가치를 증명하는 PM/PO의 진짜 '생각법'을 배워볼 차례입니다. </p>
+                <h1>스킬을 넘어, '성장하는 PM'의 관점을 만나보세요</h1>
+                <p class="sub-headline">매일 아침 보내드린 5일 코스로 기초를 다지셨다면, 이제 더 깊이 있는 성장을 위해 주간 뉴스레터를 시작해보세요.</p>
+                <form class="subscribe-form-wrapper" id="subscribe-form-element">
+                    <input type="email" name="email" placeholder="이메일 주소를 입력해주세요" required aria-label="이메일 주소">
+                    <button type="submit" class="btn">주간 뉴스레터 지금 구독하기</button>
+                </form>
+                <p class="form-message" id="advanced-opt-in-message" role="status" aria-live="polite"></p>
             </div>
         </section>
 
-        <section class="value-prop container">
-            <h2 class="section-headline">앞으로 함께 나눌 이야기</h2>
-            <div class="cards-grid">
-                <div class="card">
-                    <div class="card-icon"><i class="ri-search-eye-line"></i></div>
-                    <h3>깊이 있는 케이스 스터디</h3>
-                    <p>이제 기초를 넘어 실전입니다. 토스와 우버 등 국내외 최고 사례를 통해, 성공하는 프로덕트의 문제 해결 과정을 깊이 있게 파고듭니다.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon"><i class="ri-computer-line"></i></div>
-                    <h3>창업가의 시선으로 생각하기</h3>
-                    <p>폴 그레이엄(Paul Graham)의 통찰처럼, 성공하는 PM은 창업가처럼 사고합니다. 제품의 본질, 성장의 언어 등 스킬 너머의 단단한 철학을 갖추도록 돕습니다.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon"><i class="ri-lightbulb-flash-line"></i></div>
-                    <h3>실행 가능한 사고 도구</h3>
-                    <p>좋은 PM은 '어떻게 생각하는지'가 다릅니다. 면접관을 사로잡는 문제 정의법부터, 당신의 사이드 프로젝트를 성공으로 이끌 사고 모델까지, 실용적인 지혜를 드립니다.</p>
+        <section id="comparison" style="background-color: var(--background-secondary);">
+            <div class="container">
+                 <h2 class="section-headline">5일 코스와 주간 뉴스레터, 무엇이 다를까요?</h2>
+                <div class="comparison-section">
+                    <div class="comparison-card">
+                        <h3>5일 코스: 핵심 개념 다지기</h3>
+                        <ul>
+                            <li><i class="ri-check-line"></i>Day 1: 직무 역할 구분 (PM vs PO)</li>
+                            <li><i class="ri-check-line"></i>Day 2: 4가지 공통 핵심 역량</li>
+                            <li><i class="ri-check-line"></i>Day 3: 성공 사례 분석 (Uber)</li>
+                            <li><i class="ri-check-line"></i>Day 4: 실패 사례 분석 (이마트몰)</li>
+                            <li><i class="ri-check-line"></i>Day 5: 면접과 마인드셋</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-card pro">
+                        <h3>주간 뉴스레터: 실전 역량 강화</h3>
+                        <ul>
+                            <li><i class="ri-arrow-right-up-line"></i>현직 CPO의 의사결정 과정</li>
+                            <li><i class="ri-arrow-right-up-line"></i>성장과 데이터를 바라보는 관점</li>
+                            <li><i class="ri-arrow-right-up-line"></i>'나만의 제품 철학' 구축하기</li>
+                            <li><i class="ri-arrow-right-up-line"></i>국내외 Top-Tier 케이스 스터디</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section class="promise">
-            <div class="container promise-content">
+        <section class="value-prop">
+            <div class="container">
+                <h2 class="section-headline">주간 뉴스레터에서는 이런 이야기를 다룹니다</h2>
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-icon"><i class="ri-compass-3-line"></i></div>
+                        <h3>창업가의 시선으로 생각하기</h3>
+                        <p>PM 이론서를 100권 읽는 것보다 사용자를 10번 만나는 게 낫습니다. 폴 그레이엄의 통찰을 통해 스킬 너머의 단단한 제품 철학을 갖추도록 돕습니다.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon"><i class="ri-line-chart-line"></i></div>
+                        <h3>PM이 배워야 할 성장의 언어</h3>
+                        <p>스타트업의 본질은 성장입니다. 어떤 기능이 더 중요한지, 어떤 사용자에게 집중해야 하는지, 성장의 렌즈로 제품을 바라보는 법을 배웁니다.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon"><i class="ri-lightbulb-flash-line"></i></div>
+                        <h3>거창한 기획보다 작은 프로젝트</h3>
+                        <p>구글, 페이스북도 작은 프로젝트에서 시작되었습니다. 내가 직접 느낀 불편함에서 출발하여 진짜 사용자가 원하는 제품을 만드는 법을 알아봅니다.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="who-is-it-for">
+            <div class="container">
+                <h2 class="section-headline">이런 고민을 하고 있다면,<br>당신을 위한 뉴스레터입니다</h2>
+                <div class="checklist">
+                    <div class="check-item">
+                        <i class="ri-checkbox-circle-line"></i>
+                        <p>매일 쏟아지는 정보 속에서 '진짜 중요한 것'을 놓치고 있는 것 같아요.</p>
+                    </div>
+                    <div class="check-item">
+                        <i class="ri-checkbox-circle-line"></i>
+                        <p>기능 개발은 할 수 있지만, '왜' 이 기능을 만들어야 하는지 확신이 없어요.</p>
+                    </div>
+                    <div class="check-item">
+                        <i class="ri-checkbox-circle-line"></i>
+                        <p>성장하는 PM이 되고 싶은데, 어떤 역량을 더 키워야 할지 막막해요.</p>
+                    </div>
+                     <div class="check-item">
+                        <i class="ri-checkbox-circle-line"></i>
+                        <p>면접이나 실무에서 '나만의 관점'을 보여주고 싶어요.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="final-cta">
+            <div class="container">
                 <div class="promise-icon">
                     <i class="ri-seedling-line"></i>
                 </div>
-                <h2 class="section-headline">PM Letter의 철학</h2>
+                <h2 class="section-headline">이제, 당신의 성장에 투자하세요</h2>
                 <p class="promise-quote">"좋은 PM은 정답을 찾는 사람이 아니라, 올바른 질문을 던지는 사람입니다."</p>
-                <p class="promise-body">지난 5일간의 여정을 통해, 당신은 이미 유행하는 스킬보다 단단한 '마인드셋'의 중요성을 경험했습니다. PM Letter는 바로 그 철학에 공감하는 분들을 위한 공간입니다. 앞으로 저희는 성공한 PM들의 의사결정 과정과 가치관을 깊이 있게 다루며, 당신이 자신만의 '관점'을 가진 리더로 성장하도록 돕는 충실한 파트너가 되겠습니다.</p>
+                <p class="promise-body">PM Letter는 단순한 스킬이 아닌, 문제의 본질을 꿰뚫는 '관점'을 제공합니다. 지금 바로 시작하고, 동료들과 차이를 만드세요.</p>
+                <a href="#subscribe-form" class="btn btn-large">차이를 만드는 PM 되기 →</a>
             </div>
         </section>
-
-    </main>
+        </main>
 
     <footer class="footer">
         <div class="container">
@@ -167,11 +291,86 @@
         document.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
             const userEmail = urlParams.get('email');
+            const subscribeFormInput = document.querySelector('#subscribe-form-element input[type="email"]');
+            const subscribeForm = document.getElementById('subscribe-form-element');
+            const API_BASE_URL = (window.PM_LETTER_API_BASE_URL || `${window.location.origin}/api`).replace(/\/$/, '');
+            const ADVANCED_OPT_IN_ENDPOINT = `${API_BASE_URL}/subscriptions/advanced-opt-in`;
+            const messageEl = document.getElementById('advanced-opt-in-message');
+            const submitButton = subscribeForm?.querySelector('button[type="submit"]');
 
-            if (userEmail) {
-                // 이 부분에 userEmail 정보를 서버로 보내 구독자 목록에 추가하는 코드가 들어갑니다.
-                // 예: fetch('https://내서버.com/subscribe', { method: 'POST', body: JSON.stringify({ email: userEmail }) });
-                console.log(userEmail + ' 님의 정식 구독 처리가 완료되었습니다.');
+            function setMessage(text, variant) {
+                if (messageEl) {
+                    messageEl.textContent = text;
+                    messageEl.classList.remove('success', 'error');
+                    if (variant) {
+                        messageEl.classList.add(variant);
+                    }
+                } else if (text) {
+                    alert(text);
+                }
+            }
+
+            if (userEmail && subscribeFormInput) {
+                // Pre-fill the new subscription form
+                subscribeFormInput.value = userEmail;
+            }
+
+            if (subscribeForm) {
+                subscribeForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+
+                    if (!subscribeFormInput) {
+                        return;
+                    }
+
+                    const email = subscribeFormInput.value.trim();
+                    const originalText = submitButton ? submitButton.textContent : '';
+
+                    if (!email) {
+                        setMessage('이메일 주소를 입력해주세요.', 'error');
+                        return;
+                    }
+
+                    if (submitButton) {
+                        submitButton.disabled = true;
+                        submitButton.textContent = '신청 처리 중...';
+                    }
+                    setMessage('심화 콘텐츠 신청을 처리하고 있어요.', null);
+
+                    try {
+                        const response = await fetch(ADVANCED_OPT_IN_ENDPOINT, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ email }),
+                        });
+
+                        const result = await response.json();
+
+                        if (!response.ok) {
+                            const message = result?.detail || result?.message || '심화 구독 신청에 실패했어요.';
+                            throw new Error(message);
+                        }
+
+                        setMessage('심화 콘텐츠 구독 신청이 완료되었어요! 내일부터 이어서 발송됩니다.', 'success');
+
+                        if (submitButton) {
+                            submitButton.textContent = '신청 완료';
+                        }
+                        subscribeFormInput.setAttribute('readonly', 'readonly');
+                    } catch (error) {
+                        setMessage(error.message || '오류가 발생했어요. 잠시 후 다시 시도해주세요.', 'error');
+                        if (submitButton) {
+                            submitButton.disabled = false;
+                            submitButton.textContent = originalText;
+                        }
+                    }
+
+                    if (submitButton && submitButton.textContent !== '신청 완료') {
+                        submitButton.disabled = false;
+                    }
+                });
             }
         });
     </script>
