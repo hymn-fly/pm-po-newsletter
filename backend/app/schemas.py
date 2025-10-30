@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, Field
 
 
 class SubscriptionCreate(BaseModel):
@@ -29,3 +29,7 @@ class SubscriptionResponse(BaseModel):
     success: bool
     data: Subscription | None = None
     message: str | None = None
+
+
+class ClickEvent(BaseModel):
+    href: str = Field(..., min_length=1)
