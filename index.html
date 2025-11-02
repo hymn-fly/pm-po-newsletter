@@ -23,6 +23,23 @@
       .hero-gradient {
         background: linear-gradient(180deg, #F3F4F6 0%, #FFFFFF 100%);
       }
+      .subscription-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+      .form-message {
+        min-height: 1.5rem;
+        font-size: 0.95rem;
+        font-weight: 600;
+        transition: color 0.2s ease;
+      }
+      .form-message.success {
+        color: #047857;
+      }
+      .form-message.error {
+        color: #dc2626;
+      }
     </style>
 </head>
   <body>
@@ -30,7 +47,7 @@
       <header class="sticky top-0 bg-white/80 backdrop-blur-lg z-40 border-b border-gray-200/60">
         <div class="max-w-7xl mx-auto px-6 lg:px-8 flex justify-between items-center h-20">
           <h1 class="text-2xl font-black text-gray-900 tracking-tighter">PM Letter</h1>
-          <a href="#/app" class="bg-gradient-to-br from-blue-600 to-blue-500 text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:from-blue-700 hover:to-blue-600 transition-all duration-300 ease-in-out shadow-sm hover:shadow-md transform hover:-translate-y-0.5">콘텐츠 둘러보기</a>
+          <a href="#subscribe" class="bg-gradient-to-br from-blue-600 to-blue-500 text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:from-blue-700 hover:to-blue-600 transition-all duration-300 ease-in-out shadow-sm hover:shadow-md transform hover:-translate-y-0.5">구독 시작하기</a>
         </div>
       </header>
       <main>
@@ -38,17 +55,17 @@
           <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black text-gray-900 tracking-tighter leading-tight">내 메일함 속, <br /> 작은 PM/PO 멘토</h1>
           <p class="mt-10 max-w-3xl mx-auto text-lg sm:text-xl text-gray-600 leading-relaxed">복잡한 PM/PO의 핵심 지식, <br/> 이제 AI가 주니어의 눈높이에 맞춰 요약해드려요. <br />빅테크 PM 현직으로 일하고 있는 <br />검증된 전문가들의 인사이트로 <br />당신의 성장을 돕는 든든한 멘토가 되어줄게요.</p>
           <div class="mt-14">
-            <a href="#subscribe" class="bg-gradient-to-br from-blue-600 to-blue-500 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:from-blue-700 hover:to-blue-600 transition-all duration-300 ease-in-out transform hover:-translate-y-1 shadow-lg hover:shadow-xl">5일 무료 코스 시작하기</a>
+            <a href="#subscribe" class="bg-gradient-to-br from-blue-600 to-blue-500 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:from-blue-700 hover:to-blue-600 transition-all duration-300 ease-in-out transform hover:-translate-y-1 shadow-lg hover:shadow-xl">5일 코스 시작하기</a>
           </div>
         </section>
         <section class="py-24 sm:py-32">
             <div class="max-w-3xl mx-auto px-6 lg:px-8 text-center">
                 <h2 class="text-4xl sm:text-5xl font-bold text-gray-900 tracking-tight">PM/PO, 이렇게 준비하고 계신가요?</h2>
-                <p class="mt-6 text-lg text-gray-600">경력 1~3년차 주니어들의 현실적인 고민:</p>
+                <p class="mt-6 text-lg text-gray-600">경력 1~3년차 주니어들의 현실적인 고민</p>
                 <div class="mt-14 text-left space-y-5 max-w-md mx-auto text-gray-700 text-lg">
-                    <p>🤔 "PM과 PO의 차이가 뭔지, 회사마다 왜 다른지 모르겠어요"</p>
+                    <p>🤔 "PM과 PO의 차이가 뭔지, 회사마다 왜 다른지 모르겠어요."</p>
                     <p>📊 "데이터 기반 의사결정이 중요하다는데, 어떻게 시작하나요?"</p>
-                    <p>💬 "면접에서 '문제 해결 경험'을 물어보는데, 어떻게 답해야 할까요?"</p>
+                    <p>💬 "면접에서 문제 해결 경험을 물어보는데, 어떻게 답해야 할까요?"</p>
                     <p>🎯 "마인드셋이 중요하다는데, 구체적으로 뭘 말하는 건가요?"</p>
                 </div>
                 <p class="mt-16 text-xl font-semibold text-gray-800">온라인 강의를 들어도, 책을 읽어도<br/>실무에서 어떻게 적용하는지 막연하신가요?</p>
@@ -56,10 +73,10 @@
         </section>
          <section class="py-24 sm:py-32 bg-blue-50">
             <div class="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-                <h2 class="text-4xl sm:text-5xl font-bold text-gray-900 tracking-tight">저희는 '스킬'이 아닌 '관점'을 이야기합니다.</h2>
+                <h2 class="text-4xl sm:text-5xl font-bold text-gray-900 tracking-tight">저희는 스킬이 아닌 관점을 이야기합니다.</h2>
                 <div class="mt-8 text-lg sm:text-xl text-gray-700 leading-relaxed space-y-6">
                   <p>시중에 PM 스킬을 알려주는 강의와 글은 많습니다. 하지만 성공적인 프로덕트는 화려한 스킬이 아닌, 사용자를 향한 깊은 공감과 집요한 문제 해결 과정에서 탄생합니다.</p>
-                  <p>PM Letter는 현업 전문가들의 지혜를 모아, 성공하는 PM의 '마인드셋'을 갖추도록 돕겠습니다. 도구에 흔들리지 않는 당신만의 프로덕트 철학을 만들어가세요.</p>
+                  <p>PM Letter는 현업 전문가들의 지혜를 모아, 성공하는 PM의 마인드셋을 갖추도록 돕겠습니다. 도구에 흔들리지 않는 당신만의 프로덕트 철학을 만들어가세요.</p>
                 </div>
             </div>
         </section>
@@ -87,7 +104,7 @@
         </section>
         <section class="py-24 sm:py-32 bg-gray-50/80">
             <div class="max-w-5xl mx-auto px-6 lg:px-8">
-                <h2 class="text-4xl sm:text-5xl font-bold text-center text-gray-900 tracking-tight">📚 5일 무료 코스 커리큘럼</h2>
+                <h2 class="text-4xl sm:text-5xl font-bold text-center text-gray-900 tracking-tight">📚 5일 구독 코스 커리큘럼</h2>
                 <p class="text-center text-gray-600 mt-6 text-lg">⏱️ 매일 5분 투자로 완성하는 실전 역량</p>
                 <div class="mt-24 space-y-10">
                     <div class="p-8 bg-white rounded-2xl border border-gray-200/80 shadow-lg shadow-gray-200/60 hover:shadow-xl transition-shadow duration-300">
@@ -118,7 +135,7 @@
                                 <ul class="mt-6 space-y-3 text-gray-700">
                                   <li class="flex items-start">
                                     <svg class="w-5 h-5 text-blue-500 mr-3.5 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"></path></svg>
-                                    <span>‘감’이 아닌 ‘근거’로 동료를 설득하는 힘</span>
+                                    <span>감이 아닌 근거로 동료를 설득하는 힘</span>
                                   </li>
                                   <li class="flex items-start">
                                     <svg class="w-5 h-5 text-blue-500 mr-3.5 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"></path></svg>
@@ -126,7 +143,7 @@
                                   </li>
                                   <li class="flex items-start">
                                     <svg class="w-5 h-5 text-blue-500 mr-3.5 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"></path></svg>
-                                    <span>해결책보다 ‘올바른 질문’을 먼저 찾는 사고법</span>
+                                    <span>해결책보다 올바른 질문을 먼저 찾는 사고법</span>
                                   </li>
                                   <li class="flex items-start">
                                     <svg class="w-5 h-5 text-blue-500 mr-3.5 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"></path></svg>
@@ -153,11 +170,11 @@
                                   </li>
                                   <li class="flex items-start">
                                     <svg class="w-5 h-5 text-blue-500 mr-3.5 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"></path></svg>
-                                    <span>ML 기반 실험 설계와 A/B 테스트 프로세스</span>
+                                    <span>머신러닝 기반 실험 설계와 A/B 테스트 프로세스</span>
                                   </li>
                                   <li class="flex items-start">
                                     <svg class="w-5 h-5 text-blue-500 mr-3.5 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"></path></svg>
-                                    <span>대기시간 25% 단축, NPS 개선의 비밀</span>
+                                    <span>대기시간 25% 단축, 사용자 만족도 개선의 비밀</span>
                                   </li>
                                 </ul>
                             </div>
@@ -211,7 +228,7 @@
                                   </li>
                                   <li class="flex items-start">
                                     <svg class="w-5 h-5 text-blue-500 mr-3.5 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"></path></svg>
-                                    <span>‘함께 일하고 싶은 PM/PO'의 핵심 역량</span>
+                                    <span>함께 일하고 싶은 PM/PO의 핵심 역량</span>
                                   </li>
                                 </ul>
                             </div>
@@ -220,6 +237,40 @@
                 </div>
             </div>
         </section>
+        <section class="py-24 sm:py-32">
+          <div class="max-w-4xl mx-auto px-6 lg:px-8">
+            <h2 class="text-4xl sm:text-5xl font-bold text-center text-gray-900 tracking-tight mb-20">💌 뉴스레터 미리보기</h2>
+            <div class="space-y-8 text-gray-700 text-lg leading-relaxed">
+              
+              <blockquote class="border-l-4 border-blue-500 pl-6 text-gray-800">
+                <p>PO는 무엇을 만들지 결정하는 사람, PM은 어떻게 만들지 실행하는 사람. 이들은 무엇을 왜(Why) → 어떻게(How) → 구현(What)의 흐름을 이어갑니다.</p>
+                <footer class="mt-3 text-sm text-gray-500">— Day 1. PM, PO, 서비스기획자 역할 비교</footer>
+              </blockquote>
+              
+              <blockquote class="border-l-4 border-blue-500 pl-6 text-gray-800">
+                <p>"결제 실패율을 줄이자”가 아니라 “왜 사용자가 결제 과정에서 불안함을 느끼는가?”를 분석하는 것 이 PM/PO의 사고 방식입니다.</p>
+                <footer class="mt-3 text-sm text-gray-500">— Day 2. 문제를 본질적으로 정의하는 능력</footer>
+              </blockquote>
+              
+              <blockquote class="border-l-4 border-blue-500 pl-6 text-gray-800">
+                <p>Uber PM이 정의한 문제의 본질은 배차 대기 시간이 아니라 사용자가 기다림을 예측할 수 없을 때 느끼는 불안감이었습니다. 좋은 PM은 대기시간을 줄이는 것이 아닌 사용자가 불안하지 않게 하는 것으로 문제를 다시 정의합니다.</p>
+                <footer class="mt-3 text-sm text-gray-500">— Day 3. Uber 성공 사례 분석</footer>
+              </blockquote>
+              
+              <blockquote class="border-l-4 border-blue-500 pl-6 text-gray-800">
+                <p>데이터는 있었지만, 그 데이터의 주어가 사용자가 아니었다는 것. 결국 데이터 기반 의사결정이 아니라, 공급자의 직감이 조직의 판단 기준이 되었습니다.</p>
+                <footer class="mt-3 text-sm text-gray-500">— Day 4. 이마트몰 실패 사례 분석</footer>
+              </blockquote>
+              
+              <blockquote class="border-l-4 border-blue-500 pl-6 text-gray-800">
+                <p>모든 면접 질문의 답은 결국 하나로 귀결됩니다. "당신은 사용자를 얼마나 깊이 이해하고 있나요?” 좋은 PM/PO는 프로덕트를 만드는 사람이 아니라, 사용자를 이해하고 그 경험을 책임지는 사람입니다.</p>
+                <footer class="mt-3 text-sm text-gray-500">— Day 5. 면접 질문의 본질과 마지막 메시지</footer>
+              </blockquote>
+              
+            </div>
+          </div>
+        </section>
+        ```
         <section class="py-24 sm:py-32">
             <div class="max-w-7xl mx-auto px-6 lg:px-8">
                 <h2 class="text-4xl sm:text-5xl font-bold text-center text-gray-900 tracking-tight">✅ 5일 완료 후 여러분은</h2>
@@ -234,7 +285,7 @@
                      <div class="bg-white p-8 rounded-2xl border border-gray-200/80 shadow-lg shadow-gray-200/50 hover:shadow-xl hover:border-gray-300 transition-all duration-300 ease-in-out">
                         <h3 class="text-xl font-bold text-gray-900">면접 준비 완료</h3>
                         <ul class="mt-4 space-y-2.5 list-disc list-inside text-gray-600">
-                            <li>"가장 어려웠던 문제 해결 경험" 답변 가능</li>
+                            <li>가장 어려웠던 문제 해결 경험 답변 가능</li>
                             <li>데이터 기반 의사결정 사례 구조화 가능</li>
                             <li>마인드셋 질문에 대한 명확한 철학 정립</li>
                         </ul>
@@ -255,15 +306,15 @@
             <h2 class="text-4xl sm:text-5xl font-bold text-center text-gray-900 tracking-tight">💬 먼저 경험한 분들의 이야기</h2>
             <div class="mt-24 grid md:grid-cols-3 gap-10">
               <div class="bg-white p-8 rounded-2xl border border-gray-200/80 shadow-lg shadow-gray-200/50 hover:shadow-xl transition-shadow duration-300">
-                <p class="text-gray-700 leading-relaxed text-lg">"PM과 PO의 차이를 이렇게 명확히 설명해준 곳은 처음이에요. Day 3 Uber 사례가 특히 도움됐습니다."</p>
+                <p class="text-gray-700 leading-relaxed text-lg">"PM/PO의 역할 차이와 Uber 사례를 통해 사용자 중심으로 문제를 정의하는 PM의 사고방식을 명확히 배웠습니다."</p>
                 <p class="mt-6 font-semibold text-gray-900">— 김*민, <span class="text-gray-500 font-normal">취업 준비생</span></p>
               </div>
               <div class="bg-white p-8 rounded-2xl border border-gray-200/80 shadow-lg shadow-gray-200/50 hover:shadow-xl transition-shadow duration-300">
-                <p class="text-gray-700 leading-relaxed text-lg">"면접 준비하면서 Day 5가 가장 유용했어요. 마인드셋 질문에 대한 답을 찾았습니다."</p>
+                <p class="text-gray-700 leading-relaxed text-lg">"면접 질문의 숨은 의도를 알려준 DAY 5가 가장 유용했어요. 실제 면접에서 큰 도움이 되었습니다."</p>
                 <p class="mt-6 font-semibold text-gray-900">— 이*지, <span class="text-gray-500 font-normal">PM 1년차</span></p>
               </div>
               <div class="bg-white p-8 rounded-2xl border border-gray-200/80 shadow-lg shadow-gray-200/50 hover:shadow-xl transition-shadow duration-300">
-                <p class="text-gray-700 leading-relaxed text-lg">"이마트몰 실패 사례가 인상적이었어요. 반대로 생각하니 무엇을 해야 할지 명확해졌습니다."</p>
+                <p class="text-gray-700 leading-relaxed text-lg">"이마트몰 실패 사례가 인상적이었어요. 공급자 중심 사고에 빠지지 않도록 제 업무를 돌아보는 계기가 되었습니다."</p>
                 <p class="mt-6 font-semibold text-gray-900">— 박*수, <span class="text-gray-500 font-normal">서비스기획자 2년차</span></p>
               </div>
             </div>
@@ -274,14 +325,15 @@
               <h2 class="text-4xl sm:text-5xl font-bold text-gray-900 tracking-tight">🚀 지금 바로 시작하세요</h2>
               <p class="mt-6 text-lg sm:text-xl text-gray-700">11/3 월요일부터 현직 전문가의 실전 노하우가 메일함에 도착합니다</p>
               <div class="mt-16 max-w-lg mx-auto bg-white p-8 sm:p-10 rounded-2xl shadow-xl">
-                <h3 class="text-2xl font-bold text-gray-900">📧 5일 무료 코스 <br/> 지금 신청하기</h3>
+                <h3 class="text-2xl font-bold text-gray-900">📧 5일 코스 지금 신청하기</h3>
                 <p class="mt-3 text-gray-600 leading-relaxed">⏱️ 30초 만에 구독 완료<br />📊 합격하는 PM/PO의 비밀 확인</p>
-                <form class="mt-8">
+                <form class="mt-8 subscription-form">
                   <div class="flex flex-col sm:flex-row gap-4">
-                    <input type="email" placeholder="이메일 주소를 입력하세요" required class="w-full px-5 py-3.5 border border-gray-300 bg-white text-gray-900 rounded-lg focus:ring-4 focus:ring-blue-200 focus:border-blue-500 placeholder-gray-500 transition-shadow">
-                    <button type="submit" class="w-full sm:w-auto bg-gradient-to-br from-blue-600 to-blue-500 text-white px-7 py-3.5 rounded-lg font-semibold hover:from-blue-700 hover:to-blue-600 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg flex-shrink-0">무료 구독 시작하기</button>
+                    <input type="email" name="email" placeholder="이메일 주소를 입력하세요" required class="w-full px-5 py-3.5 border border-gray-300 bg-white text-gray-900 rounded-lg focus:ring-4 focus:ring-blue-200 focus:border-blue-500 placeholder-gray-500 transition-shadow">
+                    <button type="submit" class="w-full sm:w-auto bg-gradient-to-br from-blue-600 to-blue-500 text-white px-7 py-3.5 rounded-lg font-semibold hover:from-blue-700 hover:to-blue-600 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg flex-shrink-0">구독 시작하기</button>
                   </div>
                   <p class="mt-4 text-xs text-gray-500">✓ Day 1은 11/3(월) 오전 10시에 도착합니다</p>
+                  <p class="form-message mt-4 text-sm text-center text-gray-600"></p>
                 </form>
               </div>
           </div>
@@ -298,15 +350,15 @@
                 <h3 class="font-semibold text-lg text-gray-900">Q. 하루에 얼마나 시간이 걸리나요?</h3>
                 <p class="mt-2 text-gray-600">A. 평균 5분입니다. 출퇴근 시간에 읽기 딱 좋습니다.</p>
               </div>
-              <div class="bg-white p-6 rounded-lg border border-gray-200/80 shadow-sm">
-                <h3 class="font-semibold text-lg text-gray-900">Q. Uber, 이마트몰 같은 사례 분석이 정말 도움이 되나요?</h3>
-                <p class="mt-2 text-gray-600">A. 네! 실제 사례를 통해 이론을 실무에 적용하는 법을 배웁니다.</p>
-              </div>
-              <div class="bg-white p-6 rounded-lg border border-gray-200/80 shadow-sm">
+               <div class="bg-white p-6 rounded-lg border border-gray-200/80 shadow-sm">
                 <h3 class="font-semibold text-lg text-gray-900">Q. 면접 준비에도 도움이 되나요?</h3>
                 <p class="mt-2 text-gray-600">A. Day 5에서 실제 면접 질문과 답변 전략을 다룹니다.</p>
               </div>
               <div class="bg-white p-6 rounded-lg border border-gray-200/80 shadow-sm">
+                <h3 class="font-semibold text-lg text-gray-900">Q. 폴 그레이엄과 Y 컴비네이터가 무엇인가요?</h3>
+                <p class="mt-2 text-gray-600">A. Y Combinator는 에어비앤비, 드롭박스 등을 발굴한 세계 최고의 스타트업 투자사입니다. <br />폴 그레이엄은 YC의 창업자로, PM/PO의 교과서로 불리는 그의 글을 주간 뉴스레터에서 함께 다룹니다.</p>
+              </div>
+               <div class="bg-white p-6 rounded-lg border border-gray-200/80 shadow-sm">
                 <h3 class="font-semibold text-lg text-gray-900">Q. 주간 뉴스레터는 유료인가요?</h3>
                 <p class="mt-2 text-gray-600">A. 5일 코스 완료 후 선택적으로 신청할 수 있는 무료 심화 콘텐츠입니다.</p>
               </div>
@@ -316,7 +368,7 @@
       </main>
       <footer class="bg-gray-900 text-white">
         <div class="max-w-7xl mx-auto py-16 px-6 lg:px-8 text-center text-sm text-gray-400">
-          <p>© 2024 PM Letter. All rights reserved.</p>
+          <p>© 2025 PM Letter. All rights reserved.</p>
           <div class="mt-6 flex justify-center gap-x-6">
             <a href="#" class="hover:text-white transition-colors">이용약관</a>
             <a href="#" class="hover:text-white transition-colors">개인정보 처리방침</a>
