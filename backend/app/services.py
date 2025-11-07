@@ -105,9 +105,10 @@ class SubscriptionService:
                 }
             )
             .eq("id", record["id"])
-            .maybe_single()
+            # .maybe_single()
             .execute()
         )
+        print(update_response)
 
         if not update_response or not update_response.data:
             raise HTTPException(
