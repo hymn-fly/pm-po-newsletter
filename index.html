@@ -445,38 +445,5 @@
         });
       });
     </script>
-    <script>
-      (function () {
-        const TRACK_ENDPOINT = `${API_BASE_URL}/track-click`;
-
-        function sendClickEvent(href) {
-          const payload = JSON.stringify({ href });
-          if (navigator.sendBeacon) {
-            const blob = new Blob([payload], { type: 'application/json' });
-            navigator.sendBeacon(TRACK_ENDPOINT, blob);
-            return;
-          }
-
-          return fetch(TRACK_ENDPOINT, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: payload,
-            keepalive: true
-          }).catch(error => {
-            if (window.console && typeof window.console.warn === 'function') {
-              console.warn('Failed to report click event', error);
-            }
-          });
-        }
-
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', () => sendClickEvent(window.location.href), { once: true });
-        } else {
-          sendClickEvent(window.location.href);
-        }
-      })();
-    </script>
   </body>
 </html>
